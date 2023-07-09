@@ -1,12 +1,7 @@
-<?php
-    echo "hellooo <br/>";
-    // phpinfo();
-    
+<?php    
     // using pdo connection
     $host = 'mydb.cbbhaex7aera.us-east-2.rds.amazonaws.com';
-    // $host = "localhost";
     $dbname = 'CP476_Project';
-    // $dbname = "world";
     $username = 'admin';
     $password = 'cp476-%uni';
 
@@ -16,22 +11,16 @@
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, //turn on errors in the form of exceptions
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, //make the default fetch be an associative array
     ];
+    global $conn;
     try {
-    $conn = new PDO($dsn, $username, $password, $options);
+        // $conn = new PDO ($dsn,$_SESSION['username'],$_SESSION['password'],$options);
+        $conn = new PDO($dsn, $username, $password, $options);
         echo "connection successful";
     } catch (PDOException $e) {
-    error_log($e->getMessage());
-    echo $e->getMessage();
-    exit('Something wrong'); //something a user can understand
+        error_log($e->getMessage());
+        echo $e->getMessage();
+        exit('Something wrong'); //something a user can understand
     }
-    $conn=null;
-    // $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
-
-    // try {
-    //     $conn = new PDO($dsn, $username, $password);
-    //     echo "Connected successfully!";
-    // } catch (PDOException $e) {
-    //     echo "Connection failed: " . $e->getMessage();
-    // }
+    
 
 ?>
