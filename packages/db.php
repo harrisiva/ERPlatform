@@ -2,8 +2,13 @@
     // using pdo connection
     $host = 'mydb.cbbhaex7aera.us-east-2.rds.amazonaws.com';
     $dbname = 'CP476_Project';
-    $username = 'admin';
-    $password = 'cp476-%uni';
+    // $username = 'admin';
+    // $password = 'cp476-%uni';
+    // $username = $_ENV['php_db_username'];
+    // $password = $_ENV['php_db_password'];
+    $username = getenv('php_db_username');
+    $password = getenv('php_db_password');
+
 
     $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
     $options = [
