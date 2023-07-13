@@ -4,9 +4,6 @@
     require "../packages/db.php";
     require "../templates/header.php";
 ?>
-<html>
-    <body>hi</body>
-</html>
 <?php
     function read ($conn){
         // prepared SQL statement
@@ -14,7 +11,7 @@
         $stmt->execute();
 
         // creating tables with column names
-        echo "<table>";
+        echo "<table class = readTable>";
         echo "<tr>";
         echo "<th class = spacing>Supplier ID  </th>";
         echo "<th class = spacing>Supplier Name  </th>";
@@ -44,7 +41,13 @@
 
 ?>
 <style>
+/* .readTable{
+    border: 1px solid black;
+    margin-left: 1px;
+} */
 .spacing{
+    
     padding-right:25px;
+    /* border: 1px solid black; */
 }
 </style>
