@@ -3,6 +3,7 @@
     // import necessary pages, packages, etc.
     require "../packages/db.php";
     require "../templates/header.php";
+    require "../styles/style.css";
     
     // prepared SQL statement
     $stmt =$conn->prepare("SELECT * FROM product");

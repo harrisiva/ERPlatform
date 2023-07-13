@@ -20,7 +20,7 @@
     try {
         // $conn = new PDO ($dsn,$_SESSION['username'],$_SESSION['password'],$options);
         $conn = new PDO($dsn, $username, $password, $options);
-        echo "connection successful";
+        // echo "connection successful";
     } catch (PDOException $e) {
         error_log($e->getMessage());
         echo $e->getMessage();
