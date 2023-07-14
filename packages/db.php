@@ -20,33 +20,30 @@
                 exit('Failed to connect to the database. Please contact the administrator.');
             }
         }
+
+        function insertMultiple(string $statement, array $data): int {
+            $success = 0; // 0: Failure, 1: Success
+            try {
+                $stmt = $this->conn->prepare($statement);
+                foreach ($data as $row){
+                    $stmt->execute($row);
+                    
+                } $success = 1;
+            } catch(Exception $e) {
+                echo "Error: " . $e->getMessage();
+            }
+            return $success;
+        }
+
         // Add other general database functions as the project requires
     }
 
-    
     class Products extends Database { 
-
-        function insertProducts(array $values): int {
-            try {
-                // Prepare SQL statement for binding and entering multiple products
-                $stmt = $this->conn->prepare(
-                "INSERT INTO product (productID, productName, description, price, quantity, status, supplierID) 
-                VALUES (:productID, :productName, :description, :price, :quantity, :status, :supplierID)"
-                );
-                // Begin transaction (where the values are binded to the statement which is executed for each entry)
-                $this->conn->beginTransaction();
-                foreach ($values as $entry) { // Iterate over the given array of entires and create transactions to enter them into the DB
-                    $stmt->bindValue("issdisi", $entry[0], $entry[1], $entry[2], $entry[3], $entry[4], $entry[5], $entry[6], $entry[7]);
-                    $stmt->execute();
-                };
-                $this->conn->commit(); // Commit the transactions that we just prepared and executed to the Database
-                echo "Inserted transactions <br>";
-            } catch(PDOException $e) {
-                $this->conn->rollback(); // Rollback the transactions that we just prepared and executed to the Database
-            };
-            return 0; // 1 if successful, 0 otherwise
+        function insertProducts(array $data): int {
+            $statement = "INSERT INTO product (productID, productName, description, price, quantity, status, supplierID) VALUES (:productID, :productName, :description, :price, :quantity, :status, :supplierID)";
+            $success = $this->insertMultiple($statement, $data);
+            return $success;
         }
-        
     }
 
     class Supplier extends Database {
@@ -63,14 +60,16 @@ $name = 'CP476_Project';
 $username = 'admin';
 $password = 'cp476-%uni';
 
-$db = new Database($host, $name, $username, $password); // Create DB Handler object
+$handler = new Products($host, $name, $username, $password); // Create Products Handler (inherited from the DB Handler/PDO Wrapper)
 
+$products_test_data = array(
+    array(0002, 'Object', 'Another Thing', 799.9, 50, 'B', 7890),
+    array(3374, 'Laptop', 'MacBook Pro', 1799.9, 30, 'A', 9876),
+);
 // Print suppliers information using the handler as a associated array ??
-echo 'Working';
 
-// Code to open a file and add the contents, iterate over the lines and add the data to the database using the products function
-
-
-
-
+echo "Working <br>";
+$success = $handler->insertProducts($products_test_data);
+echo "Inserted <br>";
+echo "Success: $success <br>";
 ?>
