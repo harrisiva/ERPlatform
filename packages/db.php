@@ -27,21 +27,23 @@
     class Products extends Database { 
 
         function insertProducts(array $values): int {
-            
-            // Prepare SQL statement for binding and entering multiple products
-            $stmt = $this->conn->prepare(
-            "INSERT INTO product (productID, productName, description, price, quantity, status, supplierID) 
-            VALUES (:productID, :productName, :description, :price, :quantity, :status, :supplierID)"
-            );
-            
-            // Begin transaciton
-            $this->conn->beginTransaction();
-            foreach ($values as $entry) { // Iterate over the given array of entires and create transactions to enter them into the DB
-                $stmt->bindValue("issdisi", $entry[0], $entry[1], $entry[2], $entry[3], $entry[4], $entry[5], $entry[6], $entry[7]);
-                $stmt->execute();
+            try {
+                // Prepare SQL statement for binding and entering multiple products
+                $stmt = $this->conn->prepare(
+                "INSERT INTO product (productID, productName, description, price, quantity, status, supplierID) 
+                VALUES (:productID, :productName, :description, :price, :quantity, :status, :supplierID)"
+                );
+                // Begin transaction (where the values are binded to the statement which is executed for each entry)
+                $this->conn->beginTransaction();
+                foreach ($values as $entry) { // Iterate over the given array of entires and create transactions to enter them into the DB
+                    $stmt->bindValue("issdisi", $entry[0], $entry[1], $entry[2], $entry[3], $entry[4], $entry[5], $entry[6], $entry[7]);
+                    $stmt->execute();
+                };
+                $this->conn->commit(); // Commit the transactions that we just prepared and executed to the Database
+                echo "Inserted transactions <br>";
+            } catch(PDOException $e) {
+                $this->conn->rollback(); // Rollback the transactions that we just prepared and executed to the Database
             };
-            $this->conn->commit(); // Commit the transactions that we just prepared and executed to the Database
-
             return 0; // 1 if successful, 0 otherwise
         }
         
