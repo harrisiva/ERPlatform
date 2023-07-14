@@ -35,7 +35,8 @@
             return $success;
         }
 
-        // Add other general database functions as the project requires
+        // TODO: Add other general database functions as the project requires
+        // Create functions for inserting (individual), updating, and deleting, and selecting (should return an associate array)
     }
 
     class Products extends Database { 
@@ -44,6 +45,7 @@
             $success = $this->insertMultiple($statement, $data);
             return $success;
         }
+        // TODO: Add specific functionality on top of the generic function for each of the generic functions from the parent Database handler (PDO wrapper) class (i.e. class above)
     }
 
     class Supplier extends Database {
@@ -65,10 +67,6 @@ $handler = new Products($host, $name, $username, $password); // Create Products 
 $products_test_data = array(
     array(0004, 'Product', 'Another Thing', 799.9, 50, 'B', 7890),
 );
-// Print suppliers information using the handler as a associated array ??
 
 echo "Working <br>";
-$success = $handler->insertProducts($products_test_data);
-echo "Inserted <br>";
-echo "Success: $success <br>";
 ?>
