@@ -5,7 +5,7 @@
     require "../templates/header.php";
 ?>
 
-<html>
+<html> <!-- HS: Is this HTML tag required? -->
     <body>
         <form action="" method="post">
             ID: <input type="text" name="id"><br>
@@ -13,7 +13,6 @@
             Address:  <input type="text" name="address"><br>
             Phone:  <input type="text" name="phone"><br>
             Email: <input type="text" name="email"><br>
-            
         <input type="submit">
 
         <br/><br/>
