@@ -1,6 +1,5 @@
 <?php 
     require "../templates/header.php";
-    // Set variables from request
     $name = $_POST["name"];
 ?>
 

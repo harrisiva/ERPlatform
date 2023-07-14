@@ -1,31 +1,42 @@
 <?php    
-    // using pdo connection
-    $host = 'mydb.cbbhaex7aera.us-east-2.rds.amazonaws.com';
-    $dbname = 'CP476_Project';
-    // $username = 'admin';
-    // $password = 'cp476-%uni';
-    // $username = $_ENV['php_db_username'];
-    // $password = $_ENV['php_db_password'];
-    $username = getenv('php_db_username');
-    $password = getenv('php_db_password');
 
+    class Database { // Our PDO Wrapper
+        // Properties
+        public $conn;
 
-    $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
-    $options = [
-    PDO::ATTR_EMULATE_PREPARES => false, // turn off emulation mode
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, //turn on errors in the form of exceptions
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, //make the default fetch be an associative array
-    ];
-    global $conn;
-    try {
-        // $conn = new PDO ($dsn,$_SESSION['username'],$_SESSION['password'],$options);
-        $conn = new PDO($dsn, $username, $password, $options);
-        // echo "connection successful";
-    } catch (PDOException $e) {
-        error_log($e->getMessage());
-        echo $e->getMessage();
-        exit('Something wrong'); //something a user can understand
+        // Constructor that establishes the SQL connection and sets the conn property. 
+        // If the connection fails, exit() is called.
+        function __construct(string $host, string $name, string $username, string $password,) {
+            $dsn = "mysql:host=$host;dbname=$name;charset=utf8mb4";
+            $options = [
+            PDO::ATTR_EMULATE_PREPARES => false, // turn off emulation mode
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, //turn on errors in the form of exceptions
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, //make the default fetch be an associative array
+            ];
+            try {
+                $this->conn = new PDO($dsn, $username, $password, $options);
+            } catch (PDOException $e) {
+                error_log($e->getMessage());
+                echo $e->getMessage();
+                exit('Failed to connect to the database. Please contact the administrator.');
+            }
+        }
+
+        // Methods
+            // Insert
+            // Remove
+            // and other stuff if we need that the PDO doesnt give
+
     }
+
     
+    class Products extends Database {
+
+    }
+
+    class Supplier extends Database {
+
+    }
+
 
 ?>
