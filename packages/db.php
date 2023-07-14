@@ -63,8 +63,7 @@ $password = 'cp476-%uni';
 $handler = new Products($host, $name, $username, $password); // Create Products Handler (inherited from the DB Handler/PDO Wrapper)
 
 $products_test_data = array(
-    array(0002, 'Object', 'Another Thing', 799.9, 50, 'B', 7890),
-    array(3374, 'Laptop', 'MacBook Pro', 1799.9, 30, 'A', 9876),
+    array(0004, 'Product', 'Another Thing', 799.9, 50, 'B', 7890),
 );
 // Print suppliers information using the handler as a associated array ??
 
