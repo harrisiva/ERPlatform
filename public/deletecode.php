@@ -26,7 +26,7 @@ if (isset($_POST['delete_product']))
 // checks to see if user entered supplier id to be deleted
 if (isset($_POST['delete_supplier']))
 {
-    $supplier_id = $_POST['delete_supplier'];
+    $supplier_id = $_POST['suppid'];
     if ($supplier_id){
         remove_supp($supplier_id, $conn);
     }
