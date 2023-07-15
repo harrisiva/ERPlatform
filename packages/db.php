@@ -35,6 +35,29 @@
             return $success;
         }
 
+        function search($query, $search){
+            try{
+                $stmt = $this->conn->prepare($query);
+                $stmt->bindValue(':search', '%' . $search . '%');
+                $stmt->execute();
+                if ($stmt->rowCount()<= 0){
+                    echo "The query outputted no results";
+                } else {
+                    while ($read = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        $rValues = '';
+                        foreach ($read as $column => $value) {
+                            $rValues .= "<strong>".$column . ":</strong>  " . $value . " <br>";
+                        }
+                
+                        echo $rValues . "<br>";
+                    }
+                }
+            } catch (PDOException $e){
+                ECHO "ERROR: ". $e->getMessage();
+            }
+            $this->conn = null;
+        }
+
         // TODO: Add other general database functions as the project requires
         // Create functions for inserting (individual), updating, and deleting, and selecting (should return an associate array)
     }
@@ -45,11 +68,22 @@
             $success = $this->insertMultiple($statement, $data);
             return $success;
         }
+        function searchProducts($field,$search){
+            $query = "SELECT * FROM product WHERE $field LIKE CONCAT('%',:search,'%')";
+            return $this->search($query,$search);
+            
+        }
         // TODO: Add specific functionality on top of the generic function for each of the generic functions from the parent Database handler (PDO wrapper) class (i.e. class above)
     }
 
     class Supplier extends Database {
+        function searchSuppliers($field,$search){
+            $query = "SELECT * FROM supplier WHERE $field LIKE CONCAT('%',:search,'%')";
+            return $this->search($query,$search);            
+        }
+        
     }
+
 
 ?>
 
@@ -67,6 +101,5 @@ $handler = new Products($host, $name, $username, $password); // Create Products 
 $products_test_data = array(
     array(0004, 'Product', 'Another Thing', 799.9, 50, 'B', 7890),
 );
-
 echo "Working <br>";
 ?>
