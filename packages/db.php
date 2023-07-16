@@ -51,60 +51,16 @@
             return $success;
         }
 
-        function search($query, $search): array{
-            $rValues = array();
-            try{
-                $stmt = $this->conn->prepare($query);
-                $stmt->bindValue(':search', '%' . $search . '%');
-                $stmt->execute();
-                if ($stmt->rowCount()<= 0){
-                    echo "The query outputted no results";
-                } else {
-                    while ($read = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        foreach ($read as $column => $value) {
-                            $rValues[$column] = $value;
-                        }
-                    }
-                }
-            } catch (PDOException $e){
-                ECHO "ERROR: ". $e->getMessage();
-            }
-            $this->conn = null;
-            return $rValues;
-        }
-        
-        function read_old ($query){
-            $stmt = $this->conn->prepare($query);
-            $stmt->execute();
-            $rValues = array();
-
-            // fetches all sql entries in table as rows
-            while ($read = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $row = array();
-                foreach ($read as $column => $value) {
-                    $row[$column] = $value;
-                }
-                $rValues[] = $row;
-            }
-             
-            $this->conn = null;
-            return $rValues;
-        }
-    
-
         function read(string $query, string $search=""): array { // New read function that can handle both searching and reading
             $response = array();
             try {
                 $stmt = $this->conn->prepare($query);
                 if ($search !="") {$stmt->bindValue(':search', '%' . $search . '%');}
+                $stmt->execute();
                 if ($stmt->rowCount()>0){
-                    echo "Iterating over result";
-                    while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        foreach ($result as $key => $value) {
-                            $response[$key] = $value;
-                        }
-                    }
-                } else { echo "No rows";}
+                    $response = $stmt->fetchAll();
+                    if (count($response)==1) {$response=$response[0];}
+                } 
             } catch (PDOException $e) {
                 echo "Error: " . $e->getMessage();
             };
@@ -147,7 +103,7 @@
 
         function searchSuppliers($field,$search){
             $query = "SELECT * FROM supplier WHERE $field LIKE CONCAT('%',:search,'%')";
-            return $this->search($query,$search);            
+            return $this->read($query,$search);            
         }
 
         function readSuppliers(){

@@ -19,11 +19,10 @@ $handler = new Supplier($host, $name, $username, $password);
 
 
 echo "Working <br>";
-
-$response = $handler->readSuppliers();
-echo "Responsed retrived";
-foreach ($response as $key => $value) {
-    echo $key .": ". $value . "\n";
-}
+$field = "address";
+$search = "789 Park Ave";
+$response = $handler->searchSuppliers($field, $search);
+echo "Response Retrived: <br>";
+echo var_dump($response)
 
 ?>
