@@ -73,7 +73,7 @@
             return $rValues;
         }
         
-        function read ($query){
+        function read_old ($query){
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             $rValues = array();
@@ -91,9 +91,35 @@
             return $rValues;
         }
     
+
+        function read(string $query, string $search=""): array { // New read function that can handle both searching and reading
+            $response = array();
+            try {
+                $stmt = $this->conn->prepare($query);
+                if ($search !="") {$stmt->bindValue(':search', '%' . $search . '%');}
+                if ($stmt->rowCount()>0){
+                    while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        foreach ($result as $key => $value) {
+                            $response[$key] = $value;
+                        }
+                    }
+                }
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            };
+            return $response;
+        }
+
         // TODO: Add other general database functions as the project requires
         // Create functions for inserting (individual), updating, and deleting, and selecting (should return an associate array)
     }
+
+    
+
+
+
+
+
 
     class Products extends Database {
 
@@ -121,16 +147,8 @@
 
     class Supplier extends Database {
         function createSupplierTable(){
-            
-            $query = "CREATE TABLE supplier (
-                supplierID int UNIQUE PRIMARY KEY,
-                supplierName varchar(45) NOT NULL,
-                address varchar(45),
-                phone varchar(45),
-                email varchar(45)
-            );";
-
-            return $this->execSingleQueryNoData($query);
+            global $create_suppliers;
+            return $this->execSingleQueryNoData($create_suppliers);
         }
 
         function searchSuppliers($field,$search){
