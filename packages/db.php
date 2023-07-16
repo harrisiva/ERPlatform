@@ -96,9 +96,13 @@
     }
 
     class Supplier extends Database {
-        function createSupplierTable(){
-            global $create_suppliers;
-            return $this->execSingleQueryNoData($create_suppliers);
+        function create(bool $table=False): int{
+            $success = 0;
+            if ($table){
+                global $create_suppliers;
+                $success = $this->execSingleQueryNoData($create_suppliers);
+            }
+            return $success;
         }
 
         function search($field,$search){
