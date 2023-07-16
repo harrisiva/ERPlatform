@@ -85,7 +85,7 @@
 
         function searchProducts($field,$search){
             $query = "SELECT * FROM product WHERE $field LIKE CONCAT('%',:search,'%')";
-            return $this->search($query,$search);
+            return $this->read($query,$search);
             
         }
         function readProducts(){
