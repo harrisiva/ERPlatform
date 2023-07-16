@@ -1,12 +1,14 @@
 <?php
     declare(strict_types=1);
+    require "queries.php";
+
     class Database { // Our PDO Wrapper
         // Properties
         public $conn;
 
         // Constructor that establishes the SQL connection and sets the conn property. 
         // If the connection fails, exit() is called.
-        function __construct(string $host, string $name, string $username, string $password,) {
+        function __construct(string $host, string $name, string $username, string $password) {
             $dsn = "mysql:host=$host;dbname=$name;charset=utf8mb4";
             $options = [
             PDO::ATTR_EMULATE_PREPARES => false, // turn off emulation mode
@@ -22,14 +24,16 @@
             }
         }
 
-        function createTable($query){
+        function createTable(string $query): int{
+            $success = 0;
             try{
                 $stmt = $this->conn->prepare($query);
                 $stmt->execute();
-                echo "Table successfully created";
+                $success = 1;
             } catch (PDOException $e){
-                echo "Error".$e->getMessage();
+                echo "Error: " . $e->getMessage();
             }
+            return $success;
         }
 
         function insertMultiple(string $statement, array $data): int {
@@ -38,7 +42,6 @@
                 $stmt = $this->conn->prepare($statement);
                 foreach ($data as $row){
                     $stmt->execute($row);
-                    
                 } $success = 1;
             } catch(Exception $e) {
                 echo "Error: " . $e->getMessage();
@@ -46,12 +49,12 @@
             return $success;
         }
 
-        function search($query, $search){
+        function search($query, $search): array{
+            $rValues = array();
             try{
                 $stmt = $this->conn->prepare($query);
                 $stmt->bindValue(':search', '%' . $search . '%');
                 $stmt->execute();
-                $rValues = array();
                 if ($stmt->rowCount()<= 0){
                     echo "The query outputted no results";
                 } else {
@@ -67,6 +70,7 @@
             $this->conn = null;
             return $rValues;
         }
+        
         function read ($query){
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
@@ -85,7 +89,6 @@
             return $rValues;
         }
     
-
         // TODO: Add other general database functions as the project requires
         // Create functions for inserting (individual), updating, and deleting, and selecting (should return an associate array)
     }
@@ -114,7 +117,6 @@
             return $this->search($query,$search);
             
         }
-
         function readProducts(){
             $query = "SELECT * FROM product";
             return $this->read($query);
@@ -124,14 +126,15 @@
 
     class Supplier extends Database {
         function createSupplierTable(){
+            
             $query = "CREATE TABLE supplier (
-                supplierID int PRIMARY KEY,
+                supplierID int UNIQUE PRIMARY KEY,
                 supplierName varchar(45) NOT NULL,
                 address varchar(45),
                 phone varchar(45),
                 email varchar(45)
-              );
-              ";
+            );";
+
             return $this->createTable($query);
         }
 
@@ -164,5 +167,6 @@ $handler = new Products($host, $name, $username, $password); // Create Products 
 $products_test_data = array(
     array(0004, 'Product', 'Another Thing', 799.9, 50, 'B', 7890),
 );
-echo "Working <br>";
+echo "DB.PHP Driver Code: <br>";
+
 ?>

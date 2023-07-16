@@ -1,11 +1,9 @@
 <?php
-   declare(strict_types=1);
-   //import necessary pages, packages, etc.
+    declare(strict_types=1);
+    //import necessary pages, packages, etc.
     require "../packages/db.php";
     require "../templates/header.php";
 ?>
-
-
 
         <!--when submit is clicked, the form data is sent for processing to a PHP file defined in action-->
         <form action ="deletecode.php" method ="post">
