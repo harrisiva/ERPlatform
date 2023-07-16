@@ -22,6 +22,16 @@
             }
         }
 
+        function createTable($query){
+            try{
+                $stmt = $this->conn->prepare($query);
+                $stmt->execute();
+                echo "Table successfully created";
+            } catch (PDOException $e){
+                echo "Error".$e->getMessage();
+            }
+        }
+
         function insertMultiple(string $statement, array $data): int {
             $success = 0; // 0: Failure, 1: Success
             try {
@@ -81,6 +91,19 @@
     }
 
     class Products extends Database { 
+        function createProductTable(){
+            $query = "CREATE TABLE product (
+                productID INT PRIMARY KEY,
+                productName VARCHAR(45) NOT NULL,
+                description VARCHAR(100),
+                price FLOAT,
+                quantity INT,
+                status CHAR(1),
+                supplierID INT NOT NULL,
+                FOREIGN KEY (supplierID) REFERENCES supplier (supplierID) ON DELETE CASCADE ON UPDATE CASCADE
+              );";
+            return $this->createTable($query);
+        }
         function insertProducts(array $data): int {
             $statement = "INSERT INTO product (productID, productName, description, price, quantity, status, supplierID) VALUES (:productID, :productName, :description, :price, :quantity, :status, :supplierID)";
             $success = $this->insertMultiple($statement, $data);
@@ -100,6 +123,18 @@
     }
 
     class Supplier extends Database {
+        function createSupplierTable(){
+            $query = "CREATE TABLE supplier (
+                supplierID int PRIMARY KEY,
+                supplierName varchar(45) NOT NULL,
+                address varchar(45),
+                phone varchar(45),
+                email varchar(45)
+              );
+              ";
+            return $this->createTable($query);
+        }
+
         function searchSuppliers($field,$search){
             $query = "SELECT * FROM supplier WHERE $field LIKE CONCAT('%',:search,'%')";
             return $this->search($query,$search);            
