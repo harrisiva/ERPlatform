@@ -24,7 +24,8 @@ $create_products = "CREATE TABLE products (
 $insert_product = "INSERT INTO product (productID, productName, description, price, quantity, status, supplierID) VALUES (:productID, :productName, :description, :price, :quantity, :status, :supplierID)";
 
 
-// Search Queries
+// Read Queries
+$read_all_suppliers = "SELECT * FROM supplier"
 
 
 ?>

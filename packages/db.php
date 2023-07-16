@@ -101,14 +101,14 @@
             return $this->execSingleQueryNoData($create_suppliers);
         }
 
-        function searchSuppliers($field,$search){
-            $query = "SELECT * FROM supplier WHERE $field LIKE CONCAT('%',:search,'%')";
+        function search($field,$search){
+            $query = "SELECT * FROM supplier WHERE $field LIKE CONCAT('%',:search,'%')"; // Left as is because of the use of ($field). I (HS) dont belive this would work if we placed it in queries.php
             return $this->read($query,$search);            
         }
 
-        function readSuppliers(){
-            $query = "SELECT * FROM supplier";
-            return $this->read($query);
+        function show(){
+            global $read_all_suppliers;
+            return $this->read($read_all_suppliers);
         }
         
     }
