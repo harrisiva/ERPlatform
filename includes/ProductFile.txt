@@ -18,4 +18,3 @@
 1516, Mouse, Wireless Mouse, $69.5, 20, A, 7807
 1234, TV, Plate TV, $599.3, 5, B, 8672
 3374, Laptop, Laptop, $1369.9, 15, A, 4567
-

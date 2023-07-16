@@ -1,8 +1,10 @@
 <?php
     declare(strict_types=1);
-    require "queries.php";
+    require "queries.php"; 
 
-    class Database { // Our PDO Wrapper
+    // NOTE: Not sure if we should be closing the conn inside every function. I think this decision is based on how I (HS) set up the login system and how a user shares the session.
+
+    class Database { // Our PDO Wrapper (Simplifies CRUD operations)
         // Properties
         public $conn;
 
@@ -24,11 +26,11 @@
             }
         }
 
-        function createTable(string $query): int{
+        // NOTE: Should create (and update) operations be supported by single or multi query functions? (is it possible is this scope too wide for these functions)?
+        function execSingleQueryNoData(string $query): int{ // prepare and execute queries/statements without data (preperation not required)
             $success = 0;
             try{
-                $stmt = $this->conn->prepare($query);
-                $stmt->execute();
+                $this->conn->exec($query);
                 $success = 1;
             } catch (PDOException $e){
                 echo "Error: " . $e->getMessage();
@@ -36,7 +38,7 @@
             return $success;
         }
 
-        function insertMultiple(string $statement, array $data): int {
+        function execMultiQueryWithData(string $statement, array $data): int { // prepare and execute multiple query satements with data in them (ideally for inserting multiple)
             $success = 0; // 0: Failure, 1: Success
             try {
                 $stmt = $this->conn->prepare($statement);
@@ -49,72 +51,41 @@
             return $success;
         }
 
-        function search($query, $search): array{
-            $rValues = array();
-            try{
+        function read(string $query, string $search=""): array { // New read function that can handle both searching and reading
+            $response = array();
+            try {
                 $stmt = $this->conn->prepare($query);
-                $stmt->bindValue(':search', '%' . $search . '%');
+                if ($search !="") {$stmt->bindValue(':search', '%' . $search . '%');}
                 $stmt->execute();
-                if ($stmt->rowCount()<= 0){
-                    echo "The query outputted no results";
-                } else {
-                    while ($read = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        foreach ($read as $column => $value) {
-                            $rValues[$column] = $value;
-                        }
-                    }
-                }
-            } catch (PDOException $e){
-                ECHO "ERROR: ". $e->getMessage();
-            }
-            $this->conn = null;
-            return $rValues;
+                if ($stmt->rowCount()>0){
+                    $response = $stmt->fetchAll();
+                    if (count($response)==1) {$response=$response[0];}
+                } 
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            };
+            return $response;
         }
-        
-        function read ($query){
-            $stmt = $this->conn->prepare($query);
-            $stmt->execute();
-            $rValues = array();
 
-            // fetches all sql entries in table as rows
-            while ($read = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $row = array();
-                foreach ($read as $column => $value) {
-                    $row[$column] = $value;
-                }
-                $rValues[] = $row;
-            }
-             
-            $this->conn = null;
-            return $rValues;
-        }
-    
         // TODO: Add other general database functions as the project requires
         // Create functions for inserting (individual), updating, and deleting, and selecting (should return an associate array)
     }
 
-    class Products extends Database { 
-        function createProductTable(){
-            $query = "CREATE TABLE product (
-                productID INT PRIMARY KEY,
-                productName VARCHAR(45) NOT NULL,
-                description VARCHAR(100),
-                price FLOAT,
-                quantity INT,
-                status CHAR(1),
-                supplierID INT NOT NULL,
-                FOREIGN KEY (supplierID) REFERENCES supplier (supplierID) ON DELETE CASCADE ON UPDATE CASCADE
-              );";
-            return $this->createTable($query);
+    class Products extends Database {
+
+        function createTable(){
+            global $create_products;
+            return $this->execSingleQueryNoData($create_products);
         }
-        function insertProducts(array $data): int {
-            $statement = "INSERT INTO product (productID, productName, description, price, quantity, status, supplierID) VALUES (:productID, :productName, :description, :price, :quantity, :status, :supplierID)";
-            $success = $this->insertMultiple($statement, $data);
-            return $success;
+
+        function createProducts(array $data): int { // TODO: Generalize (with conditions and default variables) to insert one or many products (do not accept any missing data)
+            global $insert_product;
+            return $this->execMultiQueryWithData($insert_product, $data);
         }
+
         function searchProducts($field,$search){
             $query = "SELECT * FROM product WHERE $field LIKE CONCAT('%',:search,'%')";
-            return $this->search($query,$search);
+            return $this->read($query,$search);
             
         }
         function readProducts(){
@@ -125,48 +96,25 @@
     }
 
     class Supplier extends Database {
-        function createSupplierTable(){
-            
-            $query = "CREATE TABLE supplier (
-                supplierID int UNIQUE PRIMARY KEY,
-                supplierName varchar(45) NOT NULL,
-                address varchar(45),
-                phone varchar(45),
-                email varchar(45)
-            );";
-
-            return $this->createTable($query);
+        function create(bool $table=False): int{
+            $success = 0;
+            if ($table){
+                global $create_suppliers;
+                $success = $this->execSingleQueryNoData($create_suppliers);
+            }
+            return $success;
         }
 
-        function searchSuppliers($field,$search){
-            $query = "SELECT * FROM supplier WHERE $field LIKE CONCAT('%',:search,'%')";
-            return $this->search($query,$search);            
+        function search($field,$search){
+            $query = "SELECT * FROM supplier WHERE $field LIKE CONCAT('%',:search,'%')"; // Left as is because of the use of ($field). I (HS) dont belive this would work if we placed it in queries.php
+            return $this->read($query,$search);            
         }
 
-        function readSuppliers(){
-            $query = "SELECT * FROM supplier";
-            return $this->read($query);
+        function show(){
+            global $read_all_suppliers;
+            return $this->read($read_all_suppliers);
         }
         
     }
-
-
-?>
-
-<!-- driver/test code -->
-<?php 
-
-// Load ENV variables and setup the required info for establishing a DB connection
-$host = 'mydb.cbbhaex7aera.us-east-2.rds.amazonaws.com';
-$name = 'CP476_Project';
-$username = 'admin';
-$password = 'cp476-%uni';
-
-$handler = new Products($host, $name, $username, $password); // Create Products Handler (inherited from the DB Handler/PDO Wrapper)
-
-$products_test_data = array(
-    array(0004, 'Product', 'Another Thing', 799.9, 50, 'B', 7890),
-);
-echo "DB.PHP Driver Code: <br>";
 
 ?>
