@@ -34,7 +34,12 @@
             $field = $_POST['Field'];
             $search = $_POST['entry'];
             // $query = "SELECT * FROM supplier WHERE $field LIKE CONCAT('%',:search,'%')";
-            $handler->searchSuppliers($field,$search);
+            $rValues = $handler->searchSuppliers($field,$search);
+
+        //    foreach ($rValues as $column=>$value){
+        //         echo "<strong>".$column.":</strong> ".$value.'<br>';
+        //    }
+
         }
         
     function read ($conn){
@@ -55,42 +60,6 @@
         
         $conn = null;
     };
-
-    // // function search($conn, $field, $search){
-    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    //         $field = $_POST['Field'];
-    //         $search = $_POST['entry'];
-    //         $field = $_POST['Field'];
-    //         $search = $_POST['entry'];
-    //         $query = "SELECT * FROM supplier WHERE $field LIKE CONCAT('%',:search,'%')";
-    //         try{
-    //             $stmt = $conn->prepare($query);
-    //             $stmt->bindValue(':search', '%' . $search . '%');
-    //             $stmt->execute();
-    //             if ($stmt->rowCount()<= 0){
-    //                 echo "The query outputted no results";
-    //             } else {
-    //                 while ($read = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    //                     $rValues = '';
-    //                     foreach ($read as $column => $value) {
-    //                         $rValues .= "<strong>".$column . ":</strong>  " . $value . " <br>";
-    //                     }
-                
-    //                     echo $rValues . "<br>";
-    //                 }
-    //         }
-    //             $conn = null;
-    //     } catch (PDOException $e){
-    //         ECHO "ERROR: ". $e->getMessage();
-    //     }
-        
-    // };
-    
-    // if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    //     $field = $_POST['Field'];
-    //     $search = $_POST['entry'];
-        // search($conn, $field, $search);        
-    // }  
     require "../templates/footer.php";
 ?>
 

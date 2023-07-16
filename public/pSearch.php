@@ -35,7 +35,12 @@
             $field = $_POST['pField'];
             $search = $_POST['pEntry'];
             // $query = "SELECT * FROM product WHERE $pField LIKE CONCAT('%',:search,'%')";
-            $handler->searchProducts($field,$search);
+            $rValues = $handler->searchProducts($field,$search);
+
+           foreach ($rValues as $column=>$value){
+                echo "<strong>".$column.":</strong> ".$value.'<br>';
+           }
+
         }
 
         require "../templates/footer.php"; 

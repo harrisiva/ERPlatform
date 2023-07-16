@@ -1,4 +1,5 @@
 <?php
+    declare(strict_types=1);
     class Database { // Our PDO Wrapper
         // Properties
         public $conn;
@@ -40,23 +41,40 @@
                 $stmt = $this->conn->prepare($query);
                 $stmt->bindValue(':search', '%' . $search . '%');
                 $stmt->execute();
+                $rValues = array();
                 if ($stmt->rowCount()<= 0){
                     echo "The query outputted no results";
                 } else {
                     while ($read = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        $rValues = '';
                         foreach ($read as $column => $value) {
-                            $rValues .= "<strong>".$column . ":</strong>  " . $value . " <br>";
+                            $rValues[$column] = $value;
                         }
-                
-                        echo $rValues . "<br>";
                     }
                 }
             } catch (PDOException $e){
                 ECHO "ERROR: ". $e->getMessage();
             }
             $this->conn = null;
+            return $rValues;
         }
+        function read ($query){
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $rValues = array();
+
+            // fetches all sql entries in table as rows
+            while ($read = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $row = array();
+                foreach ($read as $column => $value) {
+                    $row[$column] = $value;
+                }
+                $rValues[] = $row;
+            }
+             
+            $this->conn = null;
+            return $rValues;
+        }
+    
 
         // TODO: Add other general database functions as the project requires
         // Create functions for inserting (individual), updating, and deleting, and selecting (should return an associate array)
@@ -73,6 +91,11 @@
             return $this->search($query,$search);
             
         }
+
+        function readProducts(){
+            $query = "SELECT * FROM product";
+            return $this->read($query);
+        }
         // TODO: Add specific functionality on top of the generic function for each of the generic functions from the parent Database handler (PDO wrapper) class (i.e. class above)
     }
 
@@ -80,6 +103,11 @@
         function searchSuppliers($field,$search){
             $query = "SELECT * FROM supplier WHERE $field LIKE CONCAT('%',:search,'%')";
             return $this->search($query,$search);            
+        }
+
+        function readSuppliers(){
+            $query = "SELECT * FROM supplier";
+            return $this->read($query);
         }
         
     }

@@ -4,17 +4,20 @@
     require "../templates/header.php";
 ?>
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+
 <!-- creating tables with column names -->
 <table>
     <tr>
+    <th class = spacing>Product ID  </th>
+    <th class = spacing>Product Name  </th>
+    <th class = spacing>Description  </th>
+    <th class = spacing>Price  </th>
+    <th class = spacing>Quantity  </th>
+    <th class = spacing>Status  </th>
     <th class = spacing>Supplier ID  </th>
-    <th class = spacing>Supplier Name  </th>
-    <th class = spacing>Address  </th>
-    <th class = spacing>Phone  </th>
-    <th class = spacing>Email  </th>
     </tr> 
 
-<?php
+<?php 
     // Load ENV variables and setup the required info for establishing a DB connection
     $host = 'mydb.cbbhaex7aera.us-east-2.rds.amazonaws.com';
     $name = 'CP476_Project';
@@ -22,11 +25,10 @@
     // $password = $_ENV['php_db_username'];
     $username = 'admin';
     $password = 'cp476-%uni';
-    $handler = new Supplier($host, $name, $username, $password);
-    $rValues = $handler->readSuppliers();
+    $handler = new Products($host, $name, $username, $password);
+    $rValues = $handler->readProducts();
 
     foreach ($rValues as $row){
-        // echo $row;
         echo '<tr>';
         foreach ($row as $column=>$value){
             echo "<td class = spacing>".$value.'</td>';
