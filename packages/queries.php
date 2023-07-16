@@ -1,6 +1,6 @@
 <?php 
 
-$create_supplier = " CREATE TABLE supplier (
+$create_suppliers = " CREATE TABLE supplier (
     supplierID int UNIQUE PRIMARY KEY,
     supplierName varchar(45) NOT NULL,
     address varchar(45),
@@ -8,7 +8,7 @@ $create_supplier = " CREATE TABLE supplier (
     email varchar(45)
 );";
 
-$create_products = "CREATE TABLE product (
+$create_products = "CREATE TABLE products (
     productID INT PRIMARY KEY,
     supplierID INT NOT NULL,
     productName VARCHAR(45) NOT NULL,

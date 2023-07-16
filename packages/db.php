@@ -2,7 +2,9 @@
     declare(strict_types=1);
     require "queries.php";
 
-    class Database { // Our PDO Wrapper
+    // NOTE: Not sure if we should be closing the conn inside every function. I think this decision is based on how I (HS) set up the login system and how a user shares the session.
+
+    class Database { // Our PDO Wrapper (Simplifies CRUD operations)
         // Properties
         public $conn;
 
@@ -24,11 +26,11 @@
             }
         }
 
-        function createTable(string $query): int{
+        // Create (and update) operations are supported by single or multi query functions
+        function single_query(string $query): int{ // prepare and execute queries/statements without data (preperation not required)
             $success = 0;
             try{
-                $stmt = $this->conn->prepare($query);
-                $stmt->execute();
+                $this->conn->exec($query);
                 $success = 1;
             } catch (PDOException $e){
                 echo "Error: " . $e->getMessage();
@@ -36,7 +38,7 @@
             return $success;
         }
 
-        function insertMultiple(string $statement, array $data): int {
+        function multi_query(string $statement, array $data): int { // prepare and execute multiple query satements with data in them (ideally for inserting multiple)
             $success = 0; // 0: Failure, 1: Success
             try {
                 $stmt = $this->conn->prepare($statement);
@@ -135,7 +137,7 @@
                 email varchar(45)
             );";
 
-            return $this->createTable($query);
+            return $this->single_query($query);
         }
 
         function searchSuppliers($field,$search){
@@ -149,6 +151,5 @@
         }
         
     }
-
 
 ?>
