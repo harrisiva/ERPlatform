@@ -15,12 +15,15 @@ $password = 'cp476-%uni';
 //$products_test_data = array(
 //    array(0004, 'Product', 'Another Thing', 799.9, 50, 'B', 7890),
 //);
-$handler = new Database($host, $name, $username, $password);
+$handler = new Supplier($host, $name, $username, $password);
 
 
 echo "Working <br>";
 
-$success = $handler->execSingleQueryNoData($create_products);
-echo $success;
+$response = $handler->readSuppliers();
+echo "Responsed retrived";
+foreach ($response as $key => $value) {
+    echo $key .": ". $value . "\n";
+}
 
 ?>

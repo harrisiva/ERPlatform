@@ -98,12 +98,13 @@
                 $stmt = $this->conn->prepare($query);
                 if ($search !="") {$stmt->bindValue(':search', '%' . $search . '%');}
                 if ($stmt->rowCount()>0){
+                    echo "Iterating over result";
                     while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         foreach ($result as $key => $value) {
                             $response[$key] = $value;
                         }
                     }
-                }
+                } else { echo "No rows";}
             } catch (PDOException $e) {
                 echo "Error: " . $e->getMessage();
             };
@@ -113,13 +114,6 @@
         // TODO: Add other general database functions as the project requires
         // Create functions for inserting (individual), updating, and deleting, and selecting (should return an associate array)
     }
-
-    
-
-
-
-
-
 
     class Products extends Database {
 
