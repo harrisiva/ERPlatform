@@ -1,6 +1,6 @@
 <?php
     declare(strict_types=1);
-    require "queries.php"; // Not working
+    require "queries.php"; 
 
     // NOTE: Not sure if we should be closing the conn inside every function. I think this decision is based on how I (HS) set up the login system and how a user shares the session.
 
@@ -26,7 +26,7 @@
             }
         }
 
-        // Create (and update) operations are supported by single or multi query functions
+        // NOTE: Should create (and update) operations be supported by single or multi query functions? (is it possible is this scope too wide for these functions)?
         function execSingleQueryNoData(string $query): int{ // prepare and execute queries/statements without data (preperation not required)
             $success = 0;
             try{
@@ -97,12 +97,12 @@
 
     class Products extends Database {
 
-        function createProductTable(){
+        function createTable(){
             global $create_products;
             return $this->execSingleQueryNoData($create_products);
         }
 
-        function insertProducts(array $data): int { // TODO: Generalize (with conditions and default variables) to insert one or many products (do not accept any missing data)
+        function createProducts(array $data): int { // TODO: Generalize (with conditions and default variables) to insert one or many products (do not accept any missing data)
             global $insert_product;
             return $this->execMultiQueryWithData($insert_product, $data);
         }
