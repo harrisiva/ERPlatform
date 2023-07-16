@@ -1,5 +1,7 @@
 <?php 
 
+
+// Create statements
 $create_suppliers = " CREATE TABLE supplier (
     supplierID int UNIQUE PRIMARY KEY,
     supplierName varchar(45) NOT NULL,
@@ -19,6 +21,8 @@ $create_products = "CREATE TABLE products (
     FOREIGN KEY (supplierID) REFERENCES supplier (supplierID) ON DELETE CASCADE ON UPDATE CASCADE
 );";
 
+// Insert Statements
+$insert_product = "INSERT INTO product (productID, productName, description, price, quantity, status, supplierID) VALUES (:productID, :productName, :description, :price, :quantity, :status, :supplierID)";
 
 
 ?>

@@ -20,7 +20,7 @@ $handler = new Database($host, $name, $username, $password);
 
 echo "Working <br>";
 
-$success = $handler->single_query($create_products);
+$success = $handler->execSingleQueryNoData($create_products);
 echo $success;
 
 ?>

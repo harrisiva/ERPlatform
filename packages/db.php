@@ -1,6 +1,6 @@
 <?php
     declare(strict_types=1);
-    require "queries.php";
+    require "queries.php"; // Not working
 
     // NOTE: Not sure if we should be closing the conn inside every function. I think this decision is based on how I (HS) set up the login system and how a user shares the session.
 
@@ -27,7 +27,7 @@
         }
 
         // Create (and update) operations are supported by single or multi query functions
-        function single_query(string $query): int{ // prepare and execute queries/statements without data (preperation not required)
+        function execSingleQueryNoData(string $query): int{ // prepare and execute queries/statements without data (preperation not required)
             $success = 0;
             try{
                 $this->conn->exec($query);
@@ -38,7 +38,7 @@
             return $success;
         }
 
-        function multi_query(string $statement, array $data): int { // prepare and execute multiple query satements with data in them (ideally for inserting multiple)
+        function execMultiQueryWithData(string $statement, array $data): int { // prepare and execute multiple query satements with data in them (ideally for inserting multiple)
             $success = 0; // 0: Failure, 1: Success
             try {
                 $stmt = $this->conn->prepare($statement);
@@ -95,25 +95,18 @@
         // Create functions for inserting (individual), updating, and deleting, and selecting (should return an associate array)
     }
 
-    class Products extends Database { 
+    class Products extends Database {
+
         function createProductTable(){
-            $query = "CREATE TABLE product (
-                productID INT PRIMARY KEY,
-                productName VARCHAR(45) NOT NULL,
-                description VARCHAR(100),
-                price FLOAT,
-                quantity INT,
-                status CHAR(1),
-                supplierID INT NOT NULL,
-                FOREIGN KEY (supplierID) REFERENCES supplier (supplierID) ON DELETE CASCADE ON UPDATE CASCADE
-              );";
-            return $this->createTable($query);
+            global $create_products;
+            return $this->execSingleQueryNoData($create_products);
         }
-        function insertProducts(array $data): int {
-            $statement = "INSERT INTO product (productID, productName, description, price, quantity, status, supplierID) VALUES (:productID, :productName, :description, :price, :quantity, :status, :supplierID)";
-            $success = $this->insertMultiple($statement, $data);
-            return $success;
+
+        function insertProducts(array $data): int { // TODO: Generalize (with conditions and default variables) to insert one or many products (do not accept any missing data)
+            global $insert_product;
+            return $this->execMultiQueryWithData($insert_product, $data);
         }
+
         function searchProducts($field,$search){
             $query = "SELECT * FROM product WHERE $field LIKE CONCAT('%',:search,'%')";
             return $this->search($query,$search);
@@ -137,7 +130,7 @@
                 email varchar(45)
             );";
 
-            return $this->single_query($query);
+            return $this->execSingleQueryNoData($query);
         }
 
         function searchSuppliers($field,$search){
