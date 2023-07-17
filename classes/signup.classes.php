@@ -12,8 +12,11 @@ class Signup extends Database {
     }
 
     function setUser($username, $password){
-        
-        return;
+        $success = $this->execMultiQueryWithData(
+            "INSERT INTO users (username, password) VALUES (?,?)", array(array($username, $password))
+        );
+        echo "created use successfully ". $success . "<br>";
+        return; 
     }
 
 }

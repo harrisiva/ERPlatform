@@ -42,7 +42,7 @@
             return $success;
         }
 
-        function execMultiQueryWithData(string $statement, array $data): int { // prepare and execute multiple query satements with data in them (ideally for inserting multiple)
+        function execMultiQueryWithData(string $statement, array $data): int { // prepare and execute multiple query satements with data in them (ideally for inserting multiple but can also be used to execute single (by passing in data in a multi-dimensional array))
             $success = 0; // 0: Failure, 1: Success
             try {
                 $stmt = $this->conn->prepare($statement);
