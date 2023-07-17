@@ -5,20 +5,24 @@
     // NOTE: Not sure if we should be closing the conn inside every function. I think this decision is based on how I (HS) set up the login system and how a user shares the session.
 
     class Database { // Our PDO Wrapper (Simplifies CRUD operations)
-        // Properties
+        // Properties (SAVE THE HARDCODED DATA AS ENV VARIABLES AND THEN LOAD THEM UP)
         public $conn;
+        private string $host='mydb.cbbhaex7aera.us-east-2.rds.amazonaws.com';
+        private string $db_name='CP476_Project';
+        private string $username='admin';
+        private string $password='cp476-%uni';
 
         // Constructor that establishes the SQL connection and sets the conn property. 
         // If the connection fails, exit() is called.
-        function __construct(string $host, string $name, string $username, string $password) {
-            $dsn = "mysql:host=$host;dbname=$name;charset=utf8mb4";
+        function __construct() {
+            $dsn = "mysql:host=$this->host;dbname=$this->db_name;charset=utf8mb4";
             $options = [
             PDO::ATTR_EMULATE_PREPARES => false, // turn off emulation mode
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, //turn on errors in the form of exceptions
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, //make the default fetch be an associative array
             ];
             try {
-                $this->conn = new PDO($dsn, $username, $password, $options);
+                $this->conn = new PDO($dsn, $this->username, $this->password, $options);
             } catch (PDOException $e) {
                 error_log($e->getMessage());
                 echo $e->getMessage();

@@ -1,4 +1,5 @@
 <?php 
+require "signup.classes.php";
 
 class SignupContr {
     private $uname; // Private 
@@ -27,6 +28,11 @@ class SignupContr {
     private function pwdMatch():bool {
         $matches=False;
         if ($this->pwd==$this->pwdRepeat) {$matches=True;};
+        return $matches;
+    }
+    private function usernameTaken():bool {
+        $matches=False;
+        if ($this->) {$matches=True;};
         return $matches;
     }
 
