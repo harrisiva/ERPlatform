@@ -1,5 +1,5 @@
 <?php 
-require "/signup.classes.php";
+require "../classes/signup.classes.php";
 
 class SignupContr {
     private $uname; // Private 
@@ -13,16 +13,25 @@ class SignupContr {
         return;
     }
 
-    private function signupUser() {
+    function signupUser() {
         echo "In Signup user";
         if ($this->containsEmpty()) {
             echo "Contains Empty";
-            //header ("location: ../index.php?error=inputContainsEmpty");
-            //exit();
+            header ("location: ../index.php?error=inputContainsEmpty");
+            exit();
+        }
+        if ($this->invalidUname()) {
+            echo "Invalid username";
+            header ("location: ../index.php?error=invalidUsername");
+            exit();
+        }
+        if (!$this->pwdMatch()) {
+            echo "Password doesnt match";
+            header ("location: ../index.php?error=pwdNotMatch");
+            exit();
         }
         return;
     }
-
 
     private function containsEmpty():bool {
         $has_empty=False;
@@ -43,5 +52,7 @@ class SignupContr {
         if ($this->pwd==$this->pwdRepeat) {$matches=True;};
         return $matches;
     }
-    
 }
+
+$handler = new SignupContr("harri", "test", "test");
+$handler->signupUser();

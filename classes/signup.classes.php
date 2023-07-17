@@ -12,6 +12,3 @@ class Signup extends Database {
     }
 
 }
-
-$test = new Signup();
-$test->checkUser("david");

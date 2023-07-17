@@ -10,12 +10,12 @@ if (isset($_POST["submit"])) { // Run code only if it was called with POST metho
     
     // NOTE: Importing and creating contr classes crashes the server for signing up (need to resolve)
     include "../classes/signup-contr.classes.php";
-    $signup = new SignupContr($uid, $pwd, $pwdRepeat);
+    //$signup = new SignupContr($uid, $pwd, $pwdRepeat);
 
     echo "Created Signup Contr Object";
 
     // Running error handlers and user login
 
     // Return back to front page 
-    header("location: ../index.php?error=none");
+    //header("location: ../index.php?error=none");
 }
