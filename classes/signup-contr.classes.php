@@ -1,5 +1,5 @@
 <?php 
-require "../classes/signup.classes.php";
+// Including signup.classes.php here breaks the program, not sure why
 
 class SignupContr {
     private $uname; // Private 
@@ -14,6 +14,8 @@ class SignupContr {
     }
 
     function signupUser() {
+        echo "Inside SignupUser";
+        $handler = new Signup();
         echo "In Signup user";
         if ($this->containsEmpty()) {
             echo "Contains Empty";
@@ -28,6 +30,11 @@ class SignupContr {
         if (!$this->pwdMatch()) {
             echo "Password doesnt match";
             header ("location: ../index.php?error=pwdNotMatch");
+            exit();
+        }
+        if ($handler->checkExists($this->uname)){
+            echo "Username already taken";
+            header ("location: ../index.php?error=usernameTaken");
             exit();
         }
         return;
@@ -54,5 +61,4 @@ class SignupContr {
     }
 }
 
-$handler = new SignupContr("harri", "test", "test");
-$handler->signupUser();
+?>
