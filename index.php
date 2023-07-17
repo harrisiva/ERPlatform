@@ -26,10 +26,9 @@
     </div>
 
     <!-- Signup Form-->
-    
     <div class="container">
     <h2>Signup:</h2>
-    <form action="/webapp/includes/login.inc.php" method=post>
+    <form action="/webapp/includes/signup.inc.php" method=post>
 
         <div class="form-group">
             <label for="name">Name:</label>
