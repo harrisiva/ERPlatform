@@ -13,7 +13,7 @@
         ?>
 
         <div class="card text-white bg-dark mb-3" style="max-width: 50rem;">
-            <div class="card-header h3">Suppliers</div>
+            <a class="card-header h3" href="suppliers.php">Suppliers</a>
             <div class="card-body">
                 <p class="card-text">Suppliers table contains information such as the suppliers names, address, phone number, and the emails.</p>
                 <a href="#" class="card-link">Create |</a>

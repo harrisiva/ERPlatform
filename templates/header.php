@@ -22,7 +22,7 @@
 
       <!-- HREF's that directly have php filename need to be fixed so they dont show the filename -->
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/webapp/">Home</a></li>
+        <li class="active"><a href="/webapp/public/home.php">Home</a></li>
         <li><a href="/webapp/public/suppliers.php">Suppliers</a></li>
         <li><a href="/webapp/public/products.php">Products</a></li>
       </ul>
