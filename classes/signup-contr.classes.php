@@ -2,7 +2,7 @@
 // Including signup.classes.php here breaks the program, not sure why
 
 class SignupContr extends Signup {
-    private $uname; // Private 
+    private $uname;
     private $pwd;
     private $pwdRepeat;
 
@@ -13,7 +13,7 @@ class SignupContr extends Signup {
         return;
     }
 
-    function signupUser() {
+    public function signupUser() {
         if ($this->containsEmpty()) {
             header ("location: ../index.php?error=inputContainsEmpty");
             exit();
