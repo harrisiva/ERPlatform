@@ -11,4 +11,9 @@ class Signup extends Database {
         return $exists;
     }
 
+    function setUser($username, $password){
+        
+        return;
+    }
+
 }
