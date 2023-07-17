@@ -36,7 +36,6 @@
             $search = $_POST['pEntry'];
             // $query = "SELECT * FROM product WHERE $pField LIKE CONCAT('%',:search,'%')";
             $rValues = $handler->searchProducts($field,$search);
-
            foreach ($rValues as $column=>$value){
                 echo "<strong>".$column.":</strong> ".$value.'<br>';
            }
