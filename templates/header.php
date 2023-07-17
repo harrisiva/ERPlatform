@@ -20,7 +20,6 @@
         <a class="navbar-brand" href="/webapp/">Bezos</a>
       </div>
 
-      <!-- HREF's that directly have php filename need to be fixed so they dont show the filename -->
       <ul class="nav navbar-nav">
         <li class="active"><a href="/webapp/public/home.php">Home</a></li>
         <li><a href="/webapp/public/suppliers.php">Suppliers</a></li>
