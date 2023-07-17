@@ -4,9 +4,9 @@ if (isset($_POST["submit"])) { // Run code only if it was called with POST metho
     require "../classes/signup-contr.classes.php"; // Instantiate loginContr class (db User) 
     
     // Get data from POST request
-    $uname = "harri"; //$_POST["uname"];
-    $pwd = "test";//$_POST["pwd"]; 
-    $pwdRepeat = "test";//$_POST["pwdrepeat"]; 
+    $uname = $_POST["uname"];
+    $pwd = $_POST["pwd"]; 
+    $pwdRepeat = $_POST["pwdrepeat"]; 
     
     // Running error handlers and user sign up function (extends DB)
     $controller = new SignupContr($uname, $pwd, $pwdRepeat); 
