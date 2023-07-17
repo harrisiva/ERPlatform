@@ -74,6 +74,24 @@
             $this->conn = null;
             return $rValues;
         }
+
+        function delete ($query,$id){
+            $success = 0;
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id',$id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            //returns the # of affected rows (i.e. if a row is deleted)
+            if ($stmt->rowCount()>=1){
+                $success = 1;
+            }
+        
+           return $success;
+            
+        }
+            
+           
+
     
 
         // TODO: Add other general database functions as the project requires
@@ -96,6 +114,13 @@
             $query = "SELECT * FROM product";
             return $this->read($query);
         }
+
+        function deleteProducts($id){
+            $query = "DELETE FROM product where productID= :id";
+            //$query = "DELETE FROM product where productID= $id";
+            $success = $this->delete($query, $id);
+            return ($success);
+        }
         // TODO: Add specific functionality on top of the generic function for each of the generic functions from the parent Database handler (PDO wrapper) class (i.e. class above)
     }
 
@@ -110,6 +135,12 @@
             return $this->read($query);
         }
         
+        function deleteSuppliers($id){
+            $query = "DELETE FROM supplier where supplierID= :id";
+            //$query = "DELETE FROM product where productID= $id";
+            $success = $this->delete($query, $id);
+            return ($success);
+        }
     }
 
 
