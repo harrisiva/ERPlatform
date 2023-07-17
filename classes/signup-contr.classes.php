@@ -1,5 +1,4 @@
 <?php 
-// Including signup.classes.php here breaks the program, not sure why
 
 class SignupContr extends Signup {
     private $uname;
