@@ -12,7 +12,7 @@
 
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input type="text" class="form-control" name="uid" placeholder="Username">
+                <input type="text" class="form-control" name="uname" placeholder="Username">
             </div>
 
             <div class="form-group">
@@ -32,7 +32,7 @@
 
         <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" class="form-control" name="uid" placeholder="Username">
+            <input type="text" class="form-control" name="uname" placeholder="Username">
         </div>
 
         <div class="form-group">

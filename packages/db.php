@@ -54,10 +54,10 @@
         function read(string $query, string $search="", array $values=array()): array { // New read function that can handle both searching and reading
             $response = array();
             try {
-                if (count($values)==0) {$stmt = $this->conn->prepare($query);}
-                else {$stmt = $this->conn->prepare($query,$values);};
+                $stmt = $this->conn->prepare($query);
                 if ($search !="") {$stmt->bindValue(':search', '%' . $search . '%');}
-                $stmt->execute();
+                if (count($values)==0) {$stmt->execute();}
+                else {$stmt->execute($values);}
                 if ($stmt->rowCount()>0){
                     $response = $stmt->fetchAll();
                     if (count($response)==1) {$response=$response[0];}

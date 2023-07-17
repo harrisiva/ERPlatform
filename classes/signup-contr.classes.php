@@ -1,12 +1,12 @@
 <?php 
 
 class SignupContr {
-    private $uid; // Private 
+    private $uname; // Private 
     private $pwd;
     private $pwdRepeat;
 
-    public function __construct($uid, $pwd, $pwdRepeat) {
-        $this->uid = $uid;
+    public function __construct($uname, $pwd, $pwdRepeat) {
+        $this->uname = $uname;
         $this->pwd = $pwd;
         $this->pwdRepeat = $pwdRepeat;
         return;
@@ -14,12 +14,12 @@ class SignupContr {
 
     private function containsEmpty():bool {
         $has_empty=False;
-        if (empty($this->uid) || empty($this->pwd || empty($this->pwdRepeat))){$has_empty=True;};
+        if (empty($this->uname) || empty($this->pwd || empty($this->pwdRepeat))){$has_empty=True;};
         return $has_empty;
     }
-    private function invalidUid():bool {
+    private function invalidUname():bool {
         $invalid=False;
-        if (!preg_match("/^[a-zA-Z0-9]*$/",$this->uid)){
+        if (!preg_match("/^[a-zA-Z0-9]*$/",$this->uname)){
             $invalid=True;
         }
         return $invalid;
