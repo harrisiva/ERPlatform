@@ -33,8 +33,8 @@
             echo '<li><a href="#" class="glyphicon glyphicon-user"> ' . $_SESSION["username"] .'</a></li>';
             echo '<li><a href="/webapp/includes/logout.inc.php" class="glyphicon glyphicon-log-out">Logout</a></li>';
           } else {
-            echo '<li><a href="#"><span class="glyphicon glyphicon-sign-up"></span>Sign Up</a></li>';
-            echo '<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
+            echo '<li><a href="/webapp/includes/logout.inc.php"><span class="glyphicon glyphicon-sign-up"></span>Sign Up</a></li>';
+            echo '<li><a href="/webapp/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
           } 
         ?>
       </ul>
