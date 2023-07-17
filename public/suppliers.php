@@ -18,34 +18,35 @@
 
         <?php
             $handler = new Supplier();
-            $response = $handler->show();
-            echo "Working";
-            echo var_dump($response);
+            $response = $handler->show();   
         ?>
 
-    </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Address</th>
-                <th scope="col">Phone</th>
-                <th scope="col">Email</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>@Email</td>
-            </tr>
-        </tbody>
-
+            <tbody>
+                <?php 
+                    foreach ($response as $key => $value) {
+                        echo '<tr>';
+                        echo '<th scope="row">'.$value["supplierID"].'</th>';
+                        echo '<td>'.$value["supplierName"].'</td>';
+                        echo'<td>'.$value["address"].'</td>';
+                        echo'<td>'.$value["phone"].'</td>';
+                        echo'<td>'.$value["email"].'</td>';
+                        echo '</tr>';
+                    }
+                ?>
+            </tbody>
+            
+        </div>
     </table>
 
 </body>

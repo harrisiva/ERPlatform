@@ -18,11 +18,39 @@
         <?php
             $handler = new Products();
             $response = $handler->readProducts();
-            echo "Working";
-            echo var_dump($response);
         ?>
 
-    </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Supplier ID</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php 
+                    foreach ($response as $key => $value) {
+                        echo '<tr>';
+                        echo '<th scope="row">'.$value["productID"].'</th>';
+                        echo '<td>'.$value["productName"].'</td>';
+                        echo'<td>'.$value["description"].'</td>';
+                        echo'<td>'.$value["price"].'</td>';
+                        echo'<td>'.$value["quantity"].'</td>';
+                        echo'<td>'.$value["status"].'</td>';
+                        echo'<td>'.$value["supplierID"].'</td>';
+                        echo '</tr>';
+                    }
+                ?>
+            </tbody>
+            
+        </div>
+
 </body>
 
 <?php 
