@@ -10,13 +10,18 @@ class Login {
         $response = $handler->read (
             query: "SELECT * FROM users WHERE username=?;", values: array($username)
         );
-        if (count($response)==0) {header("location: ../index.php?error=userNotFound");exit();};
+        if (count($response)<=0) {header("location: ../index.php?error=userNotFound");exit();};
         
         // Check if given password matches with password for given username in the DB entry
-        $checkPwd=false;
-        if ($password==$response["password"]) {$checkPwd=True;};
+        if ($password!=$response["password"]) {
+            header("location: ../index.php?error=passwordIncorrect");exit();
+        };
 
-        // Setup session and exit
+        // Start session and set session variables
+        session_start();
+        $_SESSION["userid"] = $response["user_id"];
+        $_SESSION["username"] = $response["username"];
+
         return $response; 
     }
 }
