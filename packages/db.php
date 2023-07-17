@@ -55,7 +55,7 @@
             return $success;
         }
 
-        function read(string $query, string $search="", array $values=array()): array { // New read function that can handle both searching and reading
+        function read(string $query, string $search="", array $values=array()): array { // New read function that can handle both searching and reading (with response)
             $response = array();
             try {
                 $stmt = $this->conn->prepare($query);

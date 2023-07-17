@@ -12,8 +12,10 @@ if (isset($_POST["submit"])) { // Run code only if it was called with POST metho
 
     // Running error handlers and user sign up function (extends DB)
     $controller = new SignupContr($uname, $pwd, $pwdRepeat); 
+    //$stmt = $controller->conn->prepare("SELECT * FROM users WHERE username=?", array($uname));
     //$controller->signupUser();
+    echo "test";
 
     // Return back to front page 
-    header("location: ../index.php?error=none");
+    //header("location: ../index.php?error=none");
 }
