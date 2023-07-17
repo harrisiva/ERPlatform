@@ -13,6 +13,5 @@ class Signup extends Database {
 
 }
 
-// Load ENV variables and setup the required info for establishing a DB connection
 $test = new Signup();
 $test->checkUser("david");

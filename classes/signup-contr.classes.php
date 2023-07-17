@@ -1,7 +1,7 @@
 <?php 
 require "/signup.classes.php";
 
-class SignupContr extends Signup {
+class SignupContr {
     private $uname; // Private 
     private $pwd;
     private $pwdRepeat;
@@ -12,6 +12,17 @@ class SignupContr extends Signup {
         $this->pwdRepeat = $pwdRepeat;
         return;
     }
+
+    private function signupUser() {
+        echo "In Signup user";
+        if ($this->containsEmpty()) {
+            echo "Contains Empty";
+            //header ("location: ../index.php?error=inputContainsEmpty");
+            //exit();
+        }
+        return;
+    }
+
 
     private function containsEmpty():bool {
         $has_empty=False;
@@ -33,10 +44,4 @@ class SignupContr extends Signup {
         return $matches;
     }
     
-    private function usernameTaken():bool {
-        $taken=False;
-        if ($this->checkUser($this->uname)==True) {$taken=True;};
-        return $taken;
-    }
-
 }

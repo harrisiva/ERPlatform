@@ -7,8 +7,12 @@ if (isset($_POST["submit"])) { // Run code only if it was called with POST metho
  
     // Instantiate loginContr class (db User) 
     include "../classes/signup.classes.php";
+    
+    // NOTE: Importing and creating contr classes crashes the server for signing up (need to resolve)
     include "../classes/signup-contr.classes.php";
     $signup = new SignupContr($uid, $pwd, $pwdRepeat);
+
+    echo "Created Signup Contr Object";
 
     // Running error handlers and user login
 
