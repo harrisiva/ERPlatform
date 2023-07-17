@@ -11,9 +11,9 @@
         private string $db_name='CP476_Project';
         private string $username='admin';
         private string $password='cp476-%uni';
-
         // Constructor that establishes the SQL connection and sets the conn property. 
         // If the connection fails, exit() is called.
+
         function __construct() {
             $dsn = "mysql:host=$this->host;dbname=$this->db_name;charset=utf8mb4";
             $options = [
