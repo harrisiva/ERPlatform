@@ -1,7 +1,7 @@
 <?php 
 // Including signup.classes.php here breaks the program, not sure why
 
-class SignupContr {
+class SignupContr extends Signup {
     private $uname; // Private 
     private $pwd;
     private $pwdRepeat;
@@ -14,7 +14,6 @@ class SignupContr {
     }
 
     function signupUser() {
-        $handler = new Signup();
         if ($this->containsEmpty()) {
             header ("location: ../index.php?error=inputContainsEmpty");
             exit();
@@ -27,11 +26,11 @@ class SignupContr {
             header ("location: ../index.php?error=pwdNotMatch");
             exit();
         }
-        if ($handler->checkExists($this->uname)){
+        if ($this->checkExists($this->uname)){
             header ("location: ../index.php?error=usernameTaken");
             exit();
         }
-        $handler->setUser($this->uname, $this->pwd);
+        $this->setUser($this->uname, $this->pwd);
         return;
     }
 
