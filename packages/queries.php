@@ -1,6 +1,5 @@
 <?php 
 
-// Create Queries
 $create_suppliers = " CREATE TABLE supplier (
     supplierID int UNIQUE PRIMARY KEY,
     supplierName varchar(45) NOT NULL,
