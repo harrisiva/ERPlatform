@@ -51,10 +51,11 @@
             return $success;
         }
 
-        function read(string $query, string $search=""): array { // New read function that can handle both searching and reading
+        function read(string $query, string $search="", array $values=array()): array { // New read function that can handle both searching and reading
             $response = array();
             try {
-                $stmt = $this->conn->prepare($query);
+                if (count($values)==0) {$stmt = $this->conn->prepare($query);}
+                else {$stmt = $this->conn->prepare($query,$values);};
                 if ($search !="") {$stmt->bindValue(':search', '%' . $search . '%');}
                 $stmt->execute();
                 if ($stmt->rowCount()>0){
