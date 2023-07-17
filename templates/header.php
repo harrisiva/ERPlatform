@@ -1,3 +1,8 @@
+<?php 
+  declare(strict_types=1);
+  session_start(); 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,15 +27,12 @@
         <li><a href="/webapp/public/products.php">Products</a></li>
       </ul>
 
-      <!-- Havent set HREFs (should just leave people in this page to signup or login) -->
-
       <ul class="nav navbar-nav navbar-right">
         <?php 
-          if (isset($_SESSION["user_id"])) {
-            echo '<li><a href="#" class="glyphicon glyphicon-user"><?php echo $_SESSION["username"];?></a></li>';
+          if (isset($_SESSION["userid"])) {
+            echo '<li><a href="#" class="glyphicon glyphicon-user"> ' . $_SESSION["username"] .'</a></li>';
             echo '<li><a href="/webapp/includes/logout.inc.php" class="glyphicon glyphicon-log-out">Logout</a></li>';
           } else {
-            echo "Session not set";
             echo '<li><a href="#"><span class="glyphicon glyphicon-sign-up"></span>Sign Up</a></li>';
             echo '<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
           } 
@@ -39,5 +41,4 @@
 
     </div>
   </nav>
-  
 </head>
