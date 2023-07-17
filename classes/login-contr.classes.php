@@ -16,8 +16,7 @@ class LoginContr extends Login {
             header ("location: ../index.php?error=inputContainsEmpty");
             exit();
         }
-
-        //$this->getUser($this->uname, $this->pwd);
+        $this->getUser($this->uname, $this->pwd);
         return;
     }
 

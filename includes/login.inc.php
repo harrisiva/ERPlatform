@@ -12,5 +12,5 @@ if (isset($_POST["submit"])) { // Run code only if it was called with POST metho
     $controller->loginUser(); // Instantiate loginContr class (db User)
 
     // Return back to front page 
-    header("location: ../index.php?error=none");
+    //header("location: ../index.php?error=none");
 }
