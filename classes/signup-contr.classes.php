@@ -14,26 +14,20 @@ class SignupContr {
     }
 
     function signupUser() {
-        echo "Inside SignupUser";
         $handler = new Signup();
-        echo "In Signup user";
         if ($this->containsEmpty()) {
-            echo "Contains Empty";
             header ("location: ../index.php?error=inputContainsEmpty");
             exit();
         }
         if ($this->invalidUname()) {
-            echo "Invalid username";
             header ("location: ../index.php?error=invalidUsername");
             exit();
         }
         if (!$this->pwdMatch()) {
-            echo "Password doesnt match";
             header ("location: ../index.php?error=pwdNotMatch");
             exit();
         }
         if ($handler->checkExists($this->uname)){
-            echo "Username already taken";
             header ("location: ../index.php?error=usernameTaken");
             exit();
         }
