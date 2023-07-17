@@ -2,8 +2,8 @@
 
 if (isset($_POST["submit"])) { // Run code only if it was called with POST method (and submit button)
     // Instantiate loginContr class (db User) 
-    include "../classes/signup-contr.classes.php";
-    include "../classes/signup.classes.php";
+    require "../classes/signup-contr.classes.php";
+    require "../classes/signup.classes.php";
     
     // Get data from POST request
     $uname = $_POST["uname"];
