@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Home</title>
+  <title>Bezos</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -21,7 +21,7 @@
       </div>
 
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/webapp/public/home.php">Home</a></li>
+        <li><a href="/webapp/public/home.php">Home</a></li>
         <li><a href="/webapp/public/suppliers.php">Suppliers</a></li>
         <li><a href="/webapp/public/products.php">Products</a></li>
       </ul>
