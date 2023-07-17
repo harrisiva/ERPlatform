@@ -67,7 +67,7 @@
             return $response;
         }
 
-        function delete ($query,$id){
+        function delete (string $query, int $id){
             $success = 0;
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':id',$id, PDO::PARAM_INT);
@@ -79,7 +79,17 @@
             }
         
            return $success;
-            
+        }
+
+        function insert (string $query, array $data){
+            $success = 0;
+            try{
+                $stmt = $this->conn-> prepare($query);
+                $stmt -> execute($data);
+                $success = 1;
+            }catch (PDOException $e) {
+            };
+            return $success;
         }
             
            
@@ -112,12 +122,22 @@
             return $this->read($query);
         }
 
-        function deleteProducts($id){
+        function deleteProducts(int $id){
             $query = "DELETE FROM product where productID= :id";
             //$query = "DELETE FROM product where productID= $id";
             $success = $this->delete($query, $id);
             return ($success);
         }
+
+        function insertProduct (array $data){
+            global $insert_product;
+            $success = $this->insert($insert_product, $data);
+            return $success;
+
+        }
+
+
+        
         // TODO: Add specific functionality on top of the generic function for each of the generic functions from the parent Database handler (PDO wrapper) class (i.e. class above)
     }
 
@@ -145,7 +165,7 @@
             $query = "DELETE FROM supplier where supplierID= :id";
             //$query = "DELETE FROM product where productID= $id";
             $success = $this->delete($query, $id);
-            return ($success);
+            return $success;
         }
     }
 
