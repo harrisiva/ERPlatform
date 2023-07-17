@@ -6,7 +6,7 @@
 <body>
     <div class="container">
 
-        <form action="/includes/login.inc.php" method=post>
+        <form action="/webapp/includes/login.inc.php" method=post>
 
             <div class="form-group">
                 <label for="name">Name:</label>
@@ -18,7 +18,7 @@
                 <input type="password" class="form-control" name="pwd" placeholder="Password">
             </div>
 
-            <button type="submit" name="submit" class="btn btn-default">Submit</button>
+            <button type="submit" name="submit" class="btn btn-default">Login</button>
         </form>
 
     </div>
