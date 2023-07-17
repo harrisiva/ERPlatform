@@ -30,7 +30,7 @@ class SignupContr extends Signup {
             header ("location: ../index.php?error=usernameTaken");
             exit();
         }
-        //$this->setUser($this->uname, $this->pwd);
+        $this->setUser($this->uname, $this->pwd);
         return;
     }
 
