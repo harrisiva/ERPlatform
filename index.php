@@ -1,5 +1,6 @@
 <?php 
     require 'templates/header.php';
+    if (!isset($_SESSION["userid"])) {
 ?>
 
 <body>
@@ -57,3 +58,15 @@
     </div>
 
 </body>
+
+<?php } else { ?>
+
+<body>
+    <div class="container">
+        <h1>Project Overview</h1>
+        <p>Bunch of overview and maybe some stats from DB</p>
+        <p>You're now logged in. Feel free to check out data by navigating from header.</p>
+    </div>
+</body>
+
+<?php } ?>
