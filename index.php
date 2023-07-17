@@ -5,23 +5,22 @@
 
 <body>
     <div class="container">
-        <form action="/webapp/public/" method=post>
+
+        <form action="/includes/login.inc.php" method=post>
+
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input type="text" class="form-control" name="name">
+                <input type="text" class="form-control" name="uid" placeholder="Username">
             </div>
 
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" class="form-control" name="password">
+                <input type="password" class="form-control" name="pwd" placeholder="Password">
             </div>
 
-            <div class="checkbox">
-                <label><input type="checkbox"> Remember me</label>
-            </div>
-
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" name="submit" class="btn btn-default">Submit</button>
         </form>
+
     </div>
 
 </body>
