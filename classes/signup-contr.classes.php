@@ -1,4 +1,5 @@
 <?php 
+require "../classes/signup.classes.php";
 
 class SignupContr extends Signup {
     private $uname;
@@ -25,13 +26,11 @@ class SignupContr extends Signup {
             header ("location: ../index.php?error=pwdNotMatch");
             exit();
         }
-        //if ($this->checkExists($this->uname)){
-        //    header ("location: ../index.php?error=usernameTaken");
-        //    exit();
-        //}
+        if ($this->checkExists($this->uname)==True){
+            header ("location: ../index.php?error=usernameTaken");
+            exit();
+        }
         //$this->setUser($this->uname, $this->pwd);
-        $this->checkExists($this->uname);
-        echo "Working";
         return;
     }
 

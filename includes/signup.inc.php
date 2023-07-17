@@ -1,21 +1,17 @@
 <?php 
 
 if (isset($_POST["submit"])) { // Run code only if it was called with POST method (and submit button)
-    // Instantiate loginContr class (db User) 
-    require "../classes/signup.classes.php";
-    require "../classes/signup-contr.classes.php";
+    require "../classes/signup-contr.classes.php"; // Instantiate loginContr class (db User) 
     
     // Get data from POST request
-    $uname = $_POST["uname"];
-    $pwd = $_POST["pwd"]; 
-    $pwdRepeat = $_POST["pwdrepeat"]; 
-
+    $uname = "harri"; //$_POST["uname"];
+    $pwd = "test";//$_POST["pwd"]; 
+    $pwdRepeat = "test";//$_POST["pwdrepeat"]; 
+    
     // Running error handlers and user sign up function (extends DB)
     $controller = new SignupContr($uname, $pwd, $pwdRepeat); 
-    //$stmt = $controller->conn->prepare("SELECT * FROM users WHERE username=?", array($uname));
-    //$controller->signupUser();
-    echo "test";
+    $controller->signupUser();
 
     // Return back to front page 
-    //header("location: ../index.php?error=none");
+    header("location: ../index.php?error=none");
 }
