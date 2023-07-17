@@ -31,7 +31,6 @@ class SignupContr {
             header ("location: ../index.php?error=usernameTaken");
             exit();
         }
-        
         $handler->setUser($this->uname, $this->pwd);
         return;
     }
