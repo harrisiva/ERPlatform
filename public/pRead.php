@@ -6,7 +6,9 @@
 
     if (isset($_SESSION["userid"])) {
 ?>
-
+<div class="container mt-5">
+    <h1 class="mb-3">Products - Filtered Read</h1>
+</div>
 
 <?php
     // create new object instance
@@ -82,6 +84,9 @@
                 }
                 echo "</tr>";
             }      
+        }
+        else if (empty($rValues) && !empty($search)){
+            echo "No query results found";
         }
     } 
 ?>
