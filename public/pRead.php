@@ -11,6 +11,14 @@
 </div>
 
 <?php
+    // cleans user input 
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
     // create new object instance
     $handler = new Products();
 
@@ -27,8 +35,8 @@
             $entryErr = "Entry is required";
 
         } else {
-            $search = $_POST["pEntry"];
-            $field = $_POST["pField"];
+            $search = test_input($_POST["pEntry"]);
+            $field = test_input($_POST["pField"]);
             $rValues = $handler->searchProducts($field,$search); 
         }
     }     

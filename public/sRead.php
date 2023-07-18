@@ -12,6 +12,14 @@
 </div>
 
 <?php
+    // cleans user input 
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
     // create new object instance
     $handler = new Supplier();
 
@@ -28,7 +36,7 @@
             $entryErr = "Entry is required";
 
         } else {
-            $search = $_POST["sEntry"];
+            $search = test_input($_POST["sEntry"]);
             $field = $_POST["sField"];
             $rValues = $handler->search($field,$search); 
         }
@@ -72,6 +80,7 @@
                 <tr>
 <?php
         if (!empty($rValues)){
+            
             foreach ($rValues[0] as $column=>$value){
                 echo "<th>".$column."</th>";
             }
@@ -82,7 +91,8 @@
                     echo '<td>'.$value.'</td>';
                 }
                 echo "</tr>";
-            }      
+            }   
+            
         } else if (empty($rValues) && !empty($search)){
             echo "No query results found";
         }
