@@ -39,6 +39,7 @@
             $search = test_input($_POST["sEntry"]);
             $field = $_POST["sField"];
             $rValues = $handler->search($field,$search); 
+            if (!(isset( $rValues[0] ) && is_array($rValues[0]))) {$rValues = array($rValues);}   
         }
     }     
 ?>
