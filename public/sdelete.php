@@ -23,10 +23,10 @@
 
     if (isset($_POST['delete_supplier']))
 {
-    $supplier_id = $_POST['supp_id'];
-    if ($product_id){
+    $supplier_id = (int)$_POST['supp_id'];
+    if ($supplier_id){
         $handler = new Supplier($host, $name, $username, $password);
-        $success = $handler->deleteSuppliers($product_id);
+        $success = $handler->deleteSuppliers($supplier_id);
         echo ($success);
     }
     else{

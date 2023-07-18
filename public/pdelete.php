@@ -27,7 +27,7 @@
 
     if (isset($_POST['delete_product']))
 {
-    $product_id = $_POST['prod_id'];
+    $product_id = (int)$_POST['prod_id'];
     if ($product_id){
         $handler = new Products($host, $name, $username, $password);
         $success = $handler->deleteProducts($product_id);

@@ -1,24 +1,19 @@
-
 <?php
-    //STILL NEEDS TO BE ADJUSTED FOR SUPPLIER ONE - Work in Progress
     declare(strict_types=1);
     //import necessary pages, packages, etc.
     require "../packages/db.php";
     require "../templates/header.php";
-
 
 ?>
 
 
 <!--when sublmit is clicked, the form data is sent for processing to a PHP file defined in action-->
 <form action="" method="post">
-    Product ID: <input type="text" name="prod_id"> <br>
-    Product Name: <input type ="text" name = "prod_name"> <br>
-    Description: <input type = "text" name = "desc"> <br>
-    Price: <input type = "text" name = "price"> <br>
-    Quantity: <input type = "text" name = "quant"> <br>
-    Status: <input type = "text" name = "status"> <br>
-    supplierID: <input type = "text" name = "supplierID"> <br> <br>
+    Supplier ID: <input type="text" name="supplierID"> <br>
+    Supplier Name: <input type ="text" name = "supp_name"> <br>
+    Address: <input type = "text" name = "add"> <br>
+    Phone: <input type = "text" name = "phone"> <br>
+    Email: <input type = "text" name = "email"> <br> <br>
     <input type="submit" name ="submit" value = "Submit">
 </form>
 
@@ -38,18 +33,16 @@
     //if (isset($_POST['submit']))
 //{
     if ($_SERVER['REQUEST_METHOD']=='POST'){
-    $product_id = $_POST['prod_id'];
-    $product_name = $_POST['prod_name'];
-    $description = $_POST['desc'];
-    $price = $_POST['price'];
-    $quantity = $_POST['quant'];
-    $status = $_POST['status'];
     $supplierID = $_POST['supplierID'];
+    $supplierName = $_POST['supp_name'];
+    $address = $_POST['add'];
+    $phone = $_POST['phone'];
+    $email = $_POST['email'];
 
-    $data = array($product_id, $product_name, $description, $price, $quantity, $status, $supplierID);
+    $data = array($supplierID, $supplierName, $address, $phone, $email);
 
-    $handler = new Products($host, $name, $username, $password);
-    $success = $handler->insertProduct($data);
+    $handler = new Supplier($host, $name, $username, $password);
+    $success = $handler->insertSupplier($data);
     if ($success == 1){
         echo ("Insert completed");
     }

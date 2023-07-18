@@ -81,6 +81,7 @@
            return $success;
         }
 
+        
         function insert (string $query, array $data){
             $success = 0;
             try{
@@ -88,11 +89,27 @@
                 $stmt -> execute($data);
                 $success = 1;
             }catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+
             };
             return $success;
         }
+        /*
             
-           
+        function insert (string $query, array $data){
+            $success = 0;
+            try{
+                $stmt = $this->conn-> prepare($query);
+                foreach ($data as $value)
+                $stmt -> execute($value);
+                $success = 1;
+            }catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+
+            };
+            return $success;
+        }
+           */
 
     
 
@@ -161,12 +178,21 @@
             return $this->read($read_all_suppliers);
         }
         
-        function deleteSuppliers($id){
+        function deleteSuppliers(int $id){
             $query = "DELETE FROM supplier where supplierID= :id";
             //$query = "DELETE FROM product where productID= $id";
             $success = $this->delete($query, $id);
             return $success;
         }
+
+        function insertSupplier (array $data){
+            $query = "INSERT INTO supplier (supplierID, supplierName, address, phone, email) VALUES (:supplierID,  :supplierName, :address, :phone, :email)";
+
+            $success = $this->insert($query, $data);
+            return $success;
+
+        }
     }
 
 ?>
+
