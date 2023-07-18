@@ -1,41 +1,89 @@
 <?php
     declare(strict_types=1);
+    // import necessary pages, packages, etc.
     require "../packages/db.php";
     require "../templates/header.php";
+
+    if (isset($_SESSION["userid"])) {
 ?>
-<link rel="stylesheet" type="text/css" href="../styles/styles.css">
 
-<!-- creating tables with column names -->
-<table>
-    <tr>
-    <th class = spacing>Product ID  </th>
-    <th class = spacing>Product Name  </th>
-    <th class = spacing>Description  </th>
-    <th class = spacing>Price  </th>
-    <th class = spacing>Quantity  </th>
-    <th class = spacing>Status  </th>
-    <th class = spacing>Supplier ID  </th>
-    </tr> 
 
-<?php 
-    // Load ENV variables and setup the required info for establishing a DB connection
-    $host = 'mydb.cbbhaex7aera.us-east-2.rds.amazonaws.com';
-    $name = 'CP476_Project';
-    // $username = $_ENV['php_db_username'];
-    // $password = $_ENV['php_db_username'];
-    $username = 'admin';
-    $password = 'cp476-%uni';
-    $handler = new Products($host, $name, $username, $password);
-    $rValues = $handler->readProducts();
+<?php
+    // create new object instance
+    $handler = new Products();
 
-    foreach ($rValues as $row){
-        echo '<tr>';
-        foreach ($row as $column=>$value){
-            echo "<td class = spacing>".$value.'</td>';
+    // define variables 
+    $entryErr = "";
+    $search = $field = $rValues = "";
+ 
+    // error validation of form
+        // if the user has not entered anything, will display error. 
+        // Otherwise it will capsulate answers and object will create search query
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        
+        if (empty($_POST["pEntry"])) {
+            $entryErr = "Entry is required";
+
+        } else {
+            $search = $_POST["pEntry"];
+            $field = $_POST["pField"];
+            $rValues = $handler->searchProducts($field,$search); 
         }
-        echo '</tr>';
-   }
+    }     
+?>
+
+<!-- Search Form -->
+<div class="container mt-5">
+    <!-- action section ensures hackers can't access it -->
+    <form action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="form-group" method = "post" id = "search-form">
+        <p><span class="text-danger">* required field</span></p>
+
+    <!-- Entry field  -->
+      <div>
+        <label for="pEntry">Entry:</label>
+        <span class="text-danger">* <?php echo $entryErr;?></span> <!-- shows field is required and spits out error if not filled -->
+        <input type="pEntry" class="form-control" id="pEntry" name = "pEntry" placeholder="Enter what you wish to search">
+      </div>
+      <br>
+      <!-- dropdown of mysql column names -->
+      <div class="form-group">
+        <label for="pField">Field:</label>
+        <span class="text-danger">*</span>  <!-- shows field is required -->
+        <select class="form-control" id="pField" name = "pField">
+            <option value="productID">productID</option>
+            <option value="productName">productName</option>
+            <option value="description">description</option>
+            <option value="price">price</option>
+            <option value="quantity">quantity</option>
+            <option value="status">status</option>
+            <option value="supplierID">supplierID</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<!-- creates and outputs bootstrap table of search query -->
+<div class="container mt-5">
+   <div class = "table-responsive"> 
+        <table class = "table table-bordered table-striped">
+            <thead>
+                <tr>
+<?php
+        if (!empty($rValues)){
+            foreach ($rValues[0] as $column=>$value){
+                echo "<th>".$column."</th>";
+            }
+            echo "</tr> </thead>";
+            foreach ($rValues as $row) {
+                echo '<tr>';
+                foreach ($row as $value) {
+                    echo '<td>'.$value.'</td>';
+                }
+                echo "</tr>";
+            }      
+        }
+    } 
 ?>
 </table>
-
-<?php require "../templates/footer.php"; ?>
+</div>

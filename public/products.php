@@ -10,7 +10,7 @@
     <div class="container">
         <h1>Products</h1>
         <a href="#" class="card-link">Create |</a>
-        <a href="#" class="card-link">Read |</a>
+        <a href="pRead.php" class="card-link">Read |</a>
         <a href="#" class="card-link">Update |</a>
         <a href="#" class="card-link">Delete</a>
         <br>

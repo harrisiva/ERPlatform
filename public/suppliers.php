@@ -11,7 +11,7 @@
     <div class="container">
         <h1>Suppliers</h1>
         <a href="#" class="card-link">Create |</a>
-        <a href="#" class="card-link">Read |</a>
+        <a href="sRead.php" class="card-link">Read |</a>
         <a href="#" class="card-link">Update |</a>
         <a href="#" class="card-link">Delete</a>
         <br>
