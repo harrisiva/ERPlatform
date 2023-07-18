@@ -5,20 +5,24 @@
     // NOTE: Not sure if we should be closing the conn inside every function. I think this decision is based on how I (HS) set up the login system and how a user shares the session.
 
     class Database { // Our PDO Wrapper (Simplifies CRUD operations)
-        // Properties
+        // Properties (SAVE THE HARDCODED DATA AS ENV VARIABLES AND THEN LOAD THEM UP)
         public $conn;
-
+        private string $host='mydb.cbbhaex7aera.us-east-2.rds.amazonaws.com';
+        private string $db_name='CP476_Project';
+        private string $username='admin';
+        private string $password='cp476-%uni';
         // Constructor that establishes the SQL connection and sets the conn property. 
         // If the connection fails, exit() is called.
-        function __construct(string $host, string $name, string $username, string $password) {
-            $dsn = "mysql:host=$host;dbname=$name;charset=utf8mb4";
+
+        function __construct() {
+            $dsn = "mysql:host=$this->host;dbname=$this->db_name;charset=utf8mb4";
             $options = [
             PDO::ATTR_EMULATE_PREPARES => false, // turn off emulation mode
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, //turn on errors in the form of exceptions
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, //make the default fetch be an associative array
             ];
             try {
-                $this->conn = new PDO($dsn, $username, $password, $options);
+                $this->conn = new PDO($dsn, $this->username, $this->password, $options);
             } catch (PDOException $e) {
                 error_log($e->getMessage());
                 echo $e->getMessage();
@@ -38,7 +42,7 @@
             return $success;
         }
 
-        function execMultiQueryWithData(string $statement, array $data): int { // prepare and execute multiple query satements with data in them (ideally for inserting multiple)
+        function execMultiQueryWithData(string $statement, array $data): int { // prepare and execute multiple query satements with data in them (ideally for inserting multiple but can also be used to execute single (by passing in data in a multi-dimensional array))
             $success = 0; // 0: Failure, 1: Success
             try {
                 $stmt = $this->conn->prepare($statement);
@@ -51,12 +55,13 @@
             return $success;
         }
 
-        function read(string $query, string $search=""): array { // New read function that can handle both searching and reading
+        function read(string $query, string $search="", array $values=array()): array { // New read function that can handle both searching and reading (with response)
             $response = array();
             try {
                 $stmt = $this->conn->prepare($query);
                 if ($search !="") {$stmt->bindValue(':search', '%' . $search . '%');}
-                $stmt->execute();
+                if (count($values)==0) {$stmt->execute();}
+                else {$stmt->execute($values);}
                 if ($stmt->rowCount()>0){
                     $response = $stmt->fetchAll();
                     if (count($response)==1) {$response=$response[0];}
