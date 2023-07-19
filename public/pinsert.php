@@ -1,60 +1,126 @@
 <?php
-    declare(strict_types=1);
-    //import necessary pages, packages, etc.
-    require "../packages/db.php";
-    require "../templates/header.php";
-
+     //import necessary pages, packages, etc.
+     require "../packages/db.php";
+     require "../templates/header.php";
 ?>
 
-
-<!--when sublmit is clicked, the form data is sent for processing to a PHP file defined in action-->
-<form action="" method="post">
-    Product ID: <input type="text" name="prod_id"> <br>
-    Product Name: <input type ="text" name = "prod_name"> <br>
-    Description: <input type = "text" name = "desc"> <br>
-    Price: <input type = "text" name = "price"> <br>
-    Quantity: <input type = "text" name = "quant"> <br>
-    Status: <input type = "text" name = "status"> <br>
-    supplierID: <input type = "text" name = "supplierID"> <br> <br>
-    <input type="submit" name ="submit" value = "Submit">
-</form>
-
-<br /><br />
-
-
+<div class="container mt-5">
+    <h1 class="mb-3">Product - Insert</h1>
+</div>
 
 <?php
-// $query = "INSERT INTO product (productID, productName, description, price, quantity, status, supplierID) VALUES (:productID, :productName, :description, :price, :quantity, :status, :supplierID)";
+    // clean user input
 
-    // Load ENV variables and setup the required info for establishing a DB connection
-    $host = 'mydb.cbbhaex7aera.us-east-2.rds.amazonaws.com';
-    $name = 'CP476_Project';
-    $username = 'admin';
-    $password = 'cp476-%uni';
+    function test_input ($input){
+        $input = trim($input);
+        $input = stripslashes($input);
+        $input = htmlspecialchars($input);
+        return $input;
+    }
 
-    //if (isset($_POST['submit']))
-//{
+
+    // initialize variables
+    $entryErr = $success = "";
+
     if ($_SERVER['REQUEST_METHOD']=='POST'){
-    $product_id = $_POST['prod_id'];
-    $product_name = $_POST['prod_name'];
-    $description = $_POST['desc'];
-    $price = $_POST['price'];
-    $quantity = $_POST['quant'];
-    $status = $_POST['status'];
-    $supplierID = $_POST['supplierID'];
+        if (empty($_POST["prod_id"]) && ($_POST['prod_id'] != 0)){
+            $entryErr = "Please fill in required blanks";
+        } else{
+            $product_id = test_input($_POST['prod_id']);
+            $product_name = test_input($_POST['prod_name']);
+            $description = test_input($_POST['desc']);
+            $price = test_input($_POST['price']);
+            $quantity = test_input($_POST['quant']);
+            $status = test_input($_POST['status']);
+            $supplierID = test_input($_POST['supp_id']);
 
-    $data = array($product_id, $product_name, $description, $price, $quantity, $status, $supplierID);
+            $data = array($product_id, $product_name, $description, $price, $quantity, $status, $supplierID);
 
-    $handler = new Products($host, $name, $username, $password);
-    $success = $handler->insertProduct($data);
-    if ($success == 1){
-        echo ("Insert completed");
-    }
-    else{
-        echo ("Insert incompleted. Please try again");
-    }
-
+            $handler = new Products();
+            $success = $handler->insertProduct($data);
+        }
+        
+   
 }
     
-require "../templates/footer.php";
 ?>
+
+<!-- Insert Form -->
+
+<div class = "container mt-5">
+    <form action="<?php echo htmlspecialchars ($_SERVER["PHP_SELF"]);?>" class="form-group" method="post"> 
+    <p><span class="text-danger">* required field</span></p>
+
+    <!-- Product ID Entry -->
+
+    <div>
+        <label for = "prod_id" > Product ID: </label>
+        <span class="text-danger">* <?php echo $entryErr ?></span>
+        <input type="number" name="prod_id" id = "prod_id" class="form-control" required> <br>
+    </div>
+    <br>
+
+     <!-- Product Name Entry -->
+
+     <div>
+        <label for = "prod_name" > Product Name: </label>
+        <span class="text-danger">* <?php echo $entryErr ?></span>
+        <input type ="name" name = "prod_name" id="prod_name" class="form-control" required>
+    </div>
+    <br>
+
+    <!-- Product Description Entry -->
+    <div>
+        <label for = "description" > Description: </label>
+        <span class="text-danger">* <?php echo $entryErr ?></span>
+        <input type = "text" name = "desc" id = "desc" class="form-control" required> <br>
+    </div>
+    <br>
+
+    <!-- Product Price Entry -->
+    <div>
+        <label for = "price" > Price: </label>
+        <span class="text-danger">* <?php echo $entryErr ?></span>
+        <input type = "number" name = "price" id = "price" class="form-control" step=".01" required> <br>
+    </div>
+    <br>
+
+    <!-- Product Quantity Entry -->
+    <div>
+        <label for = "quantity" > Quantity: </label>
+        <span class="text-danger">* <?php echo $entryErr ?></span>
+        <input type = "number" name = "quant" id = "quant" class="form-control" required> <br>
+    </div>
+    <br>
+
+     <!-- Product Status Entry -->
+     <div>
+        <label for = "status" > Status: </label>
+        <span class="text-danger">* <?php echo $entryErr ?></span>
+        <input type = "text" name = "status" id = "status" class="form-control" required> <br>
+    </div>
+    <br>
+
+    <!--  Supplier ID Entry -->
+    <div>
+        <label for = "supp_id" > Supplier ID: </label>
+        <span class="text-danger">* <?php echo $entryErr ?></span>
+        <input type = "number" name = "supp_id" id = "supp_id" class="form-control" required> <br>
+    </div>
+    <br>
+
+    <input type="submit" name ="submit" value = "Submit" class="btn btn-primary">
+    </form>
+
+    <br>
+
+    <?php
+        if (isset($_POST['submit'])){
+            echo ($success == 1) ?  ("Insert succesful") : ("Insert unsuccesful. Please try again. " . $success);
+        }
+    ?>
+
+    <br>
+    <br>
+
+</div>

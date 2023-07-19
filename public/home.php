@@ -20,7 +20,9 @@
                 <a href="#" class="card-link">Create |</a>
                 <a href="sRead.php" class="card-link">Read |</a>
                 <a href="sUpdate.php" class="card-link">Update |</a>
-                <a href="sdelete.php" class="card-link">Delete</a>
+                <a href="sDelete.php" class="card-link">Delete |</a>
+                <a href="sInsert.php" class="card-link">Insert </a>
+
                 
             </div>
         </div>
@@ -33,7 +35,8 @@
                 <a href="#" class="card-link">Create |</a>
                 <a href="pRead.php" class="card-link">Read |</a>
                 <a href="pUpdate.php" class="card-link">Update |</a>
-                <a href="pdelete.php" class="card-link">Delete</a>
+                <a href="pDelete.php" class="card-link">Delete |</a>
+                <a href="pInsert.php" class="card-link">Insert </a>
             </div>
         </div>
 

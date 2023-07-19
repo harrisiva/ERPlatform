@@ -18,7 +18,7 @@
     $entryErr = $success = $supplier_id = "";
     
     if ($_SERVER['REQUEST_METHOD']=='POST'){
-        if (empty($_POST['supp_id'])){
+        if (empty($_POST['supp_id'])&& ($_POST['supp_id'] != 0)){
             $entryErr = "Entry is required";
         }
         else {
@@ -56,8 +56,8 @@
     <br>
 
     <?php
-    if (isset($_POST['delete_supplier'])){
-        echo ($success == 1) ?  ("Supplier with ID: ". $supplier_id . " deleted succesfully") : ("Delete unsuccesful. Please try again");
-    }
+        if (isset($_POST['delete_supplier'])){
+            echo ($success == 1) ?  ("Supplier with ID: ". $supplier_id . " deleted succesfully") : ("Delete unsuccesful. Please try again");
+        }
     ?>
 </div>

@@ -94,7 +94,7 @@
                 $stmt -> execute($data);
                 $success = 1;
             }catch (PDOException $e) {
-                echo "Error: " . $e->getMessage();
+                $success = "Error: " . $e->getMessage();
 
             };
             return $success;
