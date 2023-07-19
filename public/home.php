@@ -19,8 +19,8 @@
                 <!-- Setup your pages and add the links here -->
                 <a href="#" class="card-link">Create |</a>
                 <a href="sRead.php" class="card-link">Read |</a>
-                <a href="#" class="card-link">Update |</a>
-                <a href="sDelete.php" class="card-link">Delete</a>
+                <a href="sUpdate.php" class="card-link">Update |</a>
+                <a href="sdelete.php" class="card-link">Delete</a>
                 
             </div>
         </div>
@@ -32,7 +32,7 @@
                 <!-- Setup your pages and add the links here -->
                 <a href="#" class="card-link">Create |</a>
                 <a href="pRead.php" class="card-link">Read |</a>
-                <a href="#" class="card-link">Update |</a>
+                <a href="pUpdate.php" class="card-link">Update |</a>
                 <a href="pdelete.php" class="card-link">Delete</a>
             </div>
         </div>

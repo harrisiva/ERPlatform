@@ -99,6 +99,21 @@
             };
             return $success;
         }
+        
+        function update(string $query,array $data){
+            $success = 0;
+            try{
+                $stmt = $this->conn->prepare($query);
+                $stmt->execute($data);
+                if ($stmt->rowCount() > 0) {
+                    $success = 1;
+                }
+            } catch (PDOException $e){
+                echo "Error:". $e->getMessage();
+            }
+            return $success;
+        }
+
     
 
         // TODO: Add other general database functions as the project requires
@@ -141,9 +156,38 @@
 
         }
 
+        function updateSupplier(array $data) {
+            // extract field value of id from array
+            $productID = $data['id'];
+            unset($data['id']);
+        
+            
+            $query = "UPDATE product SET ";
+            $updates = []; // stores column name
+            $values = []; // corresponding value to column
+
+            // loops through data array to check if field has any data entry by user
+            foreach ($data as $column => $value) {
+               // if field has data entered, updates and values append the new values and respective column
+                if ($value !== "") {
+                    $updates[] = "$column = ?";
+                    $values[] = $value;
+                }
+            }
+        
+            // checks if any field has been updated by user
+            // if it has, then joins array of user filled column names and values using , parser and converts into a string
+            if (!empty($updates)) {
+                $query .= implode(", ", $updates) . " WHERE productID = ?";
+                $values[] = $productID;
+                return $this->update($query, $values);
+            }
+            
+            // no updates made by user
+            return false; 
+        }
 
         
-        // TODO: Add specific functionality on top of the generic function for each of the generic functions from the parent Database handler (PDO wrapper) class (i.e. class above)
     }
 
     class Supplier extends Database {
@@ -179,6 +223,38 @@
             return $success;
 
         }
+
+        function updateSupplier(array $data) {
+            // extract field value of id from array
+            $supplierID = $data['id'];
+            unset($data['id']);
+        
+            
+            $query = "UPDATE supplier SET ";
+            $updates = []; // stores column name
+            $values = []; // corresponding value to column
+
+            // loops through data array to check if field has any data entry by user
+            foreach ($data as $column => $value) {
+               // if field has data entered, updates and values append the new values and respective column
+                if ($value !== "") {
+                    $updates[] = "$column = ?";
+                    $values[] = $value;
+                }
+            }
+        
+            // checks if any field has been updated by user
+            // if it has, then joins array of user filled column names and values using , parser and converts into a string
+            if (!empty($updates)) {
+                $query .= implode(", ", $updates) . " WHERE supplierID = ?";
+                $values[] = $supplierID;
+                return $this->update($query, $values);
+            }
+            
+            // no updates made by user
+            return false; 
+        }
+        
     }
 
 ?>

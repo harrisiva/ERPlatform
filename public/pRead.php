@@ -38,6 +38,7 @@
             $search = test_input($_POST["pEntry"]);
             $field = test_input($_POST["pField"]);
             $rValues = $handler->searchProducts($field,$search); 
+            if (!(isset( $rValues[0] ) && is_array($rValues[0]))) {$rValues = array($rValues);}   
         }
     }     
 ?>

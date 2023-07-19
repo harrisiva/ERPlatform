@@ -12,8 +12,8 @@
         <h1>Suppliers</h1>
         <a href="#" class="card-link">Create |</a>
         <a href="sRead.php" class="card-link">Read |</a>
-        <a href="#" class="card-link">Update |</a>
-        <a href="#" class="card-link">Delete</a>
+        <a href="sUpdate.php" class="card-link">Update |</a>
+        <a href="sdelete.php" class="card-link">Delete</a>
         <br>
 
         <?php
