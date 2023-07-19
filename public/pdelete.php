@@ -1,43 +1,62 @@
 <?php
-
-    declare(strict_types=1);
     //import necessary pages, packages, etc.
     require "../packages/db.php";
     require "../templates/header.php";
 
 ?>
 
-
-<!--when sublmit is clicked, the form data is sent for processing to a PHP file defined in action-->
-<form action="" method="post">
-    Product ID: <input type="text" name="prod_id">
-    <button type="submit" name="delete_product"> Delete Product </button>
-</form>
-
-<br /><br />
-
+<div class="container mt-5">
+    <h1 class="mb-3">Products - Delete</h1>
+</div>
 
 <?php
 
-    // Load ENV variables and setup the required info for establishing a DB connection
-    $host = 'mydb.cbbhaex7aera.us-east-2.rds.amazonaws.com';
-    $name = 'CP476_Project';
-    $username = 'admin';
-    $password = 'cp476-%uni';
+    // initalize variables
+    $entryErr = $success = $product_id = "";
+   
+    if ($_SERVER['REQUEST_METHOD']=='POST'){
+        if (empty($_POST['prod_id'])){
+            $entryErr = "Entry is required";
+        }
+        else {
+            // creates new object instance
+            $product_id = (int)$_POST['prod_id'];
+            $handler = new Products();
+            $success = $handler->deleteProducts($product_id);
+    
+        }
 
-    if (isset($_POST['delete_product']))
-{
-    $product_id = (int)$_POST['prod_id'];
-    if ($product_id){
-        $handler = new Products($host, $name, $username, $password);
-        $success = $handler->deleteProducts($product_id);
-        echo ($success);
-    }
-    else{
-        echo('Please enter a product ID to delete');
+       
+
     }
     
-}
-    
-require "../templates/footer.php";
 ?>
+
+<!-- Delete Form -->
+
+<div class = "container mt-5">
+
+    <!--for security measures-->
+    <form action="<?php echo htmlspecialchars ($_SERVER["PHP_SELF"]);?>" class="form-group" method="post"> 
+    <p><span class="text-danger">* required field</span></p>
+
+    <!-- User entry section  -->
+        <div>
+            <label for = "prod_id"> Product ID:</label>
+            <span class="text-danger">* <?php echo $entryErr ?></span>
+            <br> <br>
+            <!-- allows users to only input numbers as product ID --> 
+            <input type="number" name="prod_id" class="form-control" id="prod_id" placeholder="Enter what you wish to delete">
+            <br><br>
+            <button type="submit" class="btn btn-primary" name="delete_product"> Delete Product </button>
+
+        </div>
+    </form>
+    
+    <br>
+    <?php
+    if (isset($_POST['delete_product'])){
+        echo ($success == 1) ?  ("Product with ID: ". $product_id . " deleted succesfully") : ("Delete unsuccesful. Please try again");
+    }
+    ?>
+</div>

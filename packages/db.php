@@ -99,23 +99,6 @@
             };
             return $success;
         }
-        /*
-            
-        function insert (string $query, array $data){
-            $success = 0;
-            try{
-                $stmt = $this->conn-> prepare($query);
-                foreach ($data as $value)
-                $stmt -> execute($value);
-                $success = 1;
-            }catch (PDOException $e) {
-                echo "Error: " . $e->getMessage();
-
-            };
-            return $success;
-        }
-           */
-
     
 
         // TODO: Add other general database functions as the project requires
@@ -185,7 +168,6 @@
         
         function deleteSuppliers(int $id){
             $query = "DELETE FROM supplier where supplierID= :id";
-            //$query = "DELETE FROM product where productID= $id";
             $success = $this->delete($query, $id);
             return $success;
         }

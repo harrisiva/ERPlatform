@@ -1,6 +1,4 @@
 <?php
-
-    declare(strict_types=1);
     //import necessary pages, packages, etc.
     require "../packages/db.php";
     require "../templates/header.php";
@@ -8,32 +6,58 @@
 ?>
 
 
-<form action="" method="post">
-    Supplier ID: <input type="text" name="supp_id">
-    <button type="submit" name="delete_supplier"> Delete Supplier </button>
-</form>
+<div class="container mt-5">
+    <h1 class="mb-3">Suppliers - Delete</h1>
+</div>
+
+
 
 <?php
-
-    // Load ENV variables and setup the required info for establishing a DB connection
-    $host = 'mydb.cbbhaex7aera.us-east-2.rds.amazonaws.com';
-    $name = 'CP476_Project';
-    $username = 'admin';
-    $password = 'cp476-%uni';
-
-    if (isset($_POST['delete_supplier']))
-{
-    $supplier_id = (int)$_POST['supp_id'];
-    if ($supplier_id){
-        $handler = new Supplier($host, $name, $username, $password);
-        $success = $handler->deleteSuppliers($supplier_id);
-        echo ($success);
-    }
-    else{
-        echo('Please enter a supplier ID to delete');
+    
+    // initialize variables
+    $entryErr = $success = $supplier_id = "";
+    
+    if ($_SERVER['REQUEST_METHOD']=='POST'){
+        if (empty($_POST['supp_id'])){
+            $entryErr = "Entry is required";
+        }
+        else {
+            // creates new object instance
+            $supplier_id = (int)$_POST['supp_id'];
+            $handler = new Supplier();
+            $success = $handler->deleteSuppliers($supplier_id);
+    
+        }
     }
     
-}
-    
-require "../templates/footer.php";
 ?>
+
+<!-- Delete Form -->
+
+<div class = "container mt-5">
+
+    <!--for security measures-->
+    <form action="<?php echo htmlspecialchars ($_SERVER["PHP_SELF"]);?>" class="form-group" method="post"> 
+    <p><span class="text-danger">* required field</span></p>
+
+    <!-- User entry section  -->
+        <div>
+            <label for = "prod_id"> Supplier ID:</label>
+            <span class="text-danger">* <?php echo $entryErr ?></span>
+            <br> <br>
+            <!-- allows users to only input numbers as product ID --> 
+            <input type="number" name="supp_id" class="form-control" id="supp_id" placeholder="Enter what you wish to delete">
+            <br><br>
+            <button type="submit" class="btn btn-primary" name="delete_supplier"> Delete Supplier </button>
+
+        </div>
+    </form>
+    
+    <br>
+
+    <?php
+    if (isset($_POST['delete_supplier'])){
+        echo ($success == 1) ?  ("Supplier with ID: ". $supplier_id . " deleted succesfully") : ("Delete unsuccesful. Please try again");
+    }
+    ?>
+</div>
