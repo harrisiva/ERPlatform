@@ -35,7 +35,7 @@
             echo '<li><a href="/webapp/includes/logout.inc.php" class="glyphicon glyphicon-log-out">Logout</a></li>';
           } else {
             echo '<li><a href="/webapp/includes/logout.inc.php"><span class="glyphicon glyphicon-sign-up"></span>Sign Up</a></li>';
-            echo '<li><a href="/webapp/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
+            echo '<li><a href="/webapp/index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
           } 
         ?>
       </ul>
