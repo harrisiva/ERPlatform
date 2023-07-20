@@ -1,4 +1,5 @@
 <?php 
+    require "packages/db.php";
     require 'templates/header.php';
     if (!isset($_SESSION["userid"])) {
 ?>
@@ -69,4 +70,11 @@
     </div>
 </body>
 
-<?php } ?>
+<?php 
+    $handler = new Products();
+    $handler->uploadFile();
+
+    $handler2 = new Supplier();
+    $handler2->uploadFile();
+
+} ?>

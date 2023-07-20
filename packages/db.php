@@ -30,6 +30,47 @@
             }
         }
 
+        function upload($fileName,$table_name){
+                    // Open and read the file
+            $file = fopen($fileName, "r");
+
+                // Get the number of fields from the table
+            $stmt = $this->conn->query("DESCRIBE $table_name");
+            if ($stmt->rowCount() == 0){
+                $num_fields = $stmt->rowCount();
+
+                // Prepare the SQL INSERT statement
+                $fields = implode(', ', array_fill(0, $num_fields, '?'));
+                $stmt = $this->conn->prepare("INSERT INTO $table_name VALUES ($fields)");
+
+                // Loop through each line of the file
+                while (($line = fgets($file)) !== false) {
+                    // Split the line into individual data fields
+                    $data = explode(", ", $line);
+
+                    // Check if the number of fields matches the data
+                    if (count($data) !== $num_fields) {
+                        // Handle error or continue to the next line, depending on your requirement
+                        continue;
+                    }
+
+                    // Bind the data to the prepared statement placeholders
+                    for ($i = 0; $i < $num_fields; $i++) {
+                        $stmt->bindParam($i + 1, $data[$i]);
+                    }
+
+                    // Execute the INSERT statement
+                    $stmt->execute();
+                }
+
+                // Close the file
+                fclose($file);
+            }
+         
+
+            
+        }
+
         // NOTE: Should create (and update) operations be supported by single or multi query functions? (is it possible is this scope too wide for these functions)?
         function execSingleQueryNoData(string $query): int{ // prepare and execute queries/statements without data (preperation not required)
             $success = 0;
@@ -187,6 +228,14 @@
             return false; 
         }
 
+        function uploadFile (){
+            // $query = "INSERT INTO your_table_name (supplierID, supplierName, address, phone, email) VALUES (?, ?, ?, ?, ?)";
+ 
+            $fileName = "ProductFile.csv";
+            $table = "product";
+            return $this->upload($fileName,$table);
+        } 
+
         
     }
 
@@ -254,6 +303,12 @@
             // no updates made by user
             return false; 
         }
+
+        function uploadFile (){
+            $fileName = "SupplierFile.csv";
+            $table = "supplier";
+            return $this->upload($fileName,$table);
+        }   
         
     }
 

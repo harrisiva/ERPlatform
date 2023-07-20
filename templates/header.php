@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bezos</title>
+  <title>StockCrate</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -19,7 +19,7 @@
     <div class="container-fluid">
 
       <div class="navbar-header">
-        <a class="navbar-brand" href="/webapp/">Bezos</a>
+        <a class="navbar-brand" href="/webapp/index.php">StockCrate</a>
       </div>
 
       <ul class="nav navbar-nav">
