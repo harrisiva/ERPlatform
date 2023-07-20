@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <h1>Suppliers</h1>
-        <a href="#" class="card-link">Create |</a>
+        <a href="sInsert.php" class="card-link">Create |</a>
         <a href="sRead.php" class="card-link">Read |</a>
         <a href="sUpdate.php" class="card-link">Update |</a>
         <a href="sdelete.php" class="card-link">Delete</a>
