@@ -27,15 +27,10 @@ The ERPlatform is a web application that provides users with a simple CRUD inter
 
 <!-- CONTRIBUTING -->
 ## Contributors
-<a href="https://github.com/CoderMF/ERPlatform/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=CoderMF/ERPLatform" alt="contrib.rocks image" />
+<a href="https://github.com/harrisiva/ERPlatform/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=harrisiva/ERPlatform" alt="contrib.rocks image" />
 </a>
-<a href="https://github.com/github_username/repo_name/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=github_username/repo_name" alt="contrib.rocks image" />
-</a>
-<a href="https://github.com/github_username/repo_name/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=github_username/repo_name" alt="contrib.rocks image" />
-</a>
+
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
