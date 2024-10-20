@@ -21,7 +21,6 @@ The ERPlatform is a web application that provides users with a simple CRUD inter
 * [![JavaScript][JavaScript.com]][JavaScript-url]
 * [![MYSQL][MYSQL.com]][MYSQL-url]
 * [![PHP][PHP.net]][PHP-url]
-* [![Next][Next.js]][Next-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -52,5 +51,3 @@ The ERPlatform is a web application that provides users with a simple CRUD inter
 [MYSQL-url]: https://www.mysql.com/
 [PHP.net]: https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white
 [PHP-url]: https://www.php.net/
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
