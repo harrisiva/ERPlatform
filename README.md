@@ -2,7 +2,7 @@
 <div align="center">
   <h3 align="center">ERP Platform</h3>
   <p align="center">
-    short project desciption
+    A simple CRUD web app built with PHP and bootstrap for managing inventory and supplier relationships.
   </p>
 </div>
 
